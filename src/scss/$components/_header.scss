@@ -1,0 +1,53 @@
+.header{
+  &__main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 0;
+  }
+
+  &__logo {
+    max-width: 90px;
+  }
+
+  &__tools {
+    display: flex;
+    align-items: center;
+  }
+
+  &__menu {
+    ul {
+      display: flex;
+      align-items: center;
+    }
+    
+    li {
+      margin-right: 30px;
+
+      &::last-child {
+        margin-right: 0;
+      }
+
+      &.home {
+        span {
+          padding-left: 30px;
+          position: relative;
+
+          &::before {
+            content: "\f015";
+            @extend %font-icon;
+            @extend %pll;
+            font-size: 13px;
+          }
+        }
+      }
+    }
+
+    a {
+      display: block;
+      font-size: 16px;
+      line-height: 24px;
+      text-transform: uppercase;
+    }
+  }
+}

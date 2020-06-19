@@ -1,0 +1,40 @@
+.footer{
+  &__menubot {
+    background-color: $color-white-2;
+    padding: 15px 0;
+
+    ul {
+      display: flex;
+      align-items: center;
+    }
+    
+    li {
+      padding-right: 20px;
+      margin-right: 20px;
+      border-right: solid 1px $color-gray-1;
+
+      &:last-child {
+        margin-right: 0;
+        padding-right: 0;
+        border-right: none;
+      }
+    }
+
+    a {
+      display: block;
+      font-size: 16px;
+      line-height: 16px;
+    }
+  }
+
+  &__main {
+    padding: 20px 0;
+  }
+
+  &__copyright {
+    text-align: center;
+    font-size: 12px;
+    line-height: 20px;
+    color: $color-gray-2;
+  }
+}
