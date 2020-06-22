@@ -1,3 +1,7 @@
+block vars
+  - let useHeader = true
+  - let useFooter = true
+  
 doctype html
 html
   head
@@ -19,14 +23,16 @@ html
     meta(name="googlebot" content="nofollow")
 
     link(href="images/favicon.ico" rel="icon" sizes="64x64" type="image/ico")
-    link(href='css/app.css' rel="stylesheet")
+    link(href='css/style.min.css' rel="stylesheet")
 
   body
     .page
-      include ../_components/_header.pug
+      if useHeader
+        include ../_components/_header.pug
 
       block main-content
 
-      include ../_components/_footer.pug
+      if useFooter
+        include ../_components/_footer.pug
 
   script(src='js/app.min.js' type="text/javascript")

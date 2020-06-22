@@ -5,6 +5,7 @@ const pug = require('gulp-pug');
 const sass = require('gulp-sass');
 const bulkSass = require('gulp-sass-bulk-import');
 const cssnano = require('gulp-cssnano');
+const rename = require('gulp-rename');
 const autoprefixer = require('gulp-autoprefixer');
 // WEBPACK
 const webpack = require('webpack-stream');
@@ -43,6 +44,7 @@ gulp.task('sass', function() {
     .pipe(sass({outputStyle: 'expanded'}))
     .pipe(autoprefixer())
     .pipe(cssnano())
+    .pipe(rename('style.min.css'))
     .pipe(gulp.dest('build/css'))
     .pipe(browserSync.stream());
 });
