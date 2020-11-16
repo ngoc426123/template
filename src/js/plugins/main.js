@@ -1,8 +1,9 @@
-$(() => {
-  $("#slide-banner").slick({
-    rows: 0,
-    autoplay: true,
-    arrows: false,
-    fade: true,
-  });
-});
+@Plugin
+export default class Main {
+  init() {
+    $(`#slide-banner`).slick({
+      dots: false,
+      arrows: false,
+    });
+  }
+}

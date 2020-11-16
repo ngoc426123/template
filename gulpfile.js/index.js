@@ -9,14 +9,52 @@ const rename = require('gulp-rename');
 const autoprefixer = require('gulp-autoprefixer');
 // WEBPACK
 const webpack = require('webpack-stream');
+const { ProvidePlugin } = require('webpack');
+const { resolve } = require('path');
 const optionWebpack = {
   mode: 'none',
   output:{
     filename : 'app.min.js'
   },
   optimization: {
-    minimize: true
+    splitChunks: false,
+    flagIncludedChunks: true,
+    concatenateModules: true,
+    occurrenceOrder: true,
+    sideEffects: true
   },
+  plugins: [
+    new ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      Plugin: ['@/core', 'default']
+    })
+  ],
+  resolve: {
+    alias: {
+      '@': resolve('./src/js/_init/')
+    }
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        options: {
+          plugins: [
+            [
+              '@babel/plugin-proposal-decorators', {
+                legacy: true
+              },
+              '@babel/plugin-proposal-class-properties',
+            ]
+          ],
+          cacheDirectory: true
+        }
+      }
+    ]
+  }
 };
 // BROWER SYNC
 const browserSync = require('browser-sync');
