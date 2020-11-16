@@ -7,10 +7,11 @@ export default function Plugin (Class) {
 
     $.fn[pluginName] = function () {
       const self = this;
-      const init = new param();
-      init.options = pluginOption;
-      init.$element = self;
-      init.init();
+      const plugin = new param();
+      plugin.$element = self;
+      plugin.options = pluginOption;
+      plugin.props = {};
+      plugin.init();
     }
 
     !!$(dataSelectorName).length && $(dataSelectorName)[pluginName]();
