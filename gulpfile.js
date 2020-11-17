@@ -7,6 +7,8 @@ const bulkSass = require('gulp-sass-bulk-import');
 const cssnano = require('gulp-cssnano');
 const rename = require('gulp-rename');
 const autoprefixer = require('gulp-autoprefixer');
+// JS
+const uglify = require('gulp-uglify');
 // WEBPACK
 const webpack = require('webpack-stream');
 const { ProvidePlugin } = require('webpack');
@@ -15,13 +17,6 @@ const optionWebpack = {
   mode: 'none',
   output:{
     filename : 'app.min.js'
-  },
-  optimization: {
-    splitChunks: false,
-    flagIncludedChunks: true,
-    concatenateModules: true,
-    occurrenceOrder: true,
-    sideEffects: true
   },
   plugins: [
     new ProvidePlugin({
@@ -42,13 +37,9 @@ const optionWebpack = {
         exclude: /node_modules/,
         loader: 'babel-loader',
         options: {
+          presets: ['@babel/preset-env'],
           plugins: [
-            [
-              '@babel/plugin-proposal-decorators', {
-                legacy: true
-              },
-              '@babel/plugin-proposal-class-properties',
-            ]
+            ['@babel/plugin-proposal-decorators', { legacy: true }],
           ],
           cacheDirectory: true
         }
@@ -91,6 +82,11 @@ gulp.task('js', function() {
   return gulp
     .src('src/js/all.js')
     .pipe(webpack(optionWebpack))
+    .pipe(uglify({
+      mangle: {
+        keep_fnames: true
+      }
+    }))
     .pipe(gulp.dest('build/js'))
     .pipe(browserSync.stream());
 });
