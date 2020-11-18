@@ -1,6 +1,10 @@
-const gulp = require('gulp');
 const del = require('del');
+const { build } = require('../config/names');
 
-module.exports = function () {
-  return del('build/');
+const clean = function () {
+  return del(build);
 }
+
+clean.displayName = `Runner: clean`;
+
+module.exports = clean

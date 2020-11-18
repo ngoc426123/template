@@ -1,11 +1,11 @@
 const { ProvidePlugin } = require('webpack');
 const { resolve } = require('path');
+const { src } = require('../config/directories');
+const { script_name } = require('../config/names');
 
 module.exports = {
   mode: 'none',
-  output:{
-    filename : 'app.min.js'
-  },
+  output:{ filename : script_name },
   plugins: [
     new ProvidePlugin({
       $: 'jquery',
@@ -15,7 +15,7 @@ module.exports = {
   ],
   resolve: {
     alias: {
-      '@': resolve('./src/js/_init/')
+      '@': resolve(`${src}/js/_init/`)
     }
   },
   module: {

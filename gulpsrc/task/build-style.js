@@ -5,15 +5,21 @@ const cssnano = require('gulp-cssnano');
 const rename = require('gulp-rename');
 const autoprefixer = require('gulp-autoprefixer');
 const browserSync = require('browser-sync');
+const { src_style, build_style } = require('../config/directories');
+const { style_name } = require('../config/names');
 
-module.exports = function () {
+const styles = function () {
   return gulp
-    .src('src/scss/app.scss')
+    .src(src_style)
     .pipe(bulkSass())
     .pipe(sass({outputStyle: 'expanded'}))
     .pipe(autoprefixer())
     .pipe(cssnano())
-    .pipe(rename('style.min.css'))
-    .pipe(gulp.dest('build/css'))
+    .pipe(rename(style_name))
+    .pipe(gulp.dest(build_style))
     .pipe(browserSync.stream());
 }
+
+styles.displayName = `Build: styles`;
+
+module.exports = styles

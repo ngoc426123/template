@@ -3,16 +3,21 @@ const browserSync = require('browser-sync');
 const uglify = require('gulp-uglify');
 const webpack = require('webpack-stream');
 const optionWebpack = require('../config/webpack');
+const { src_script, build_script } = require('../config/directories');
 
-module.exports = function () {
+const scripts = function () {
   return gulp
-    .src('src/js/all.js')
+    .src(src_script)
     .pipe(webpack(optionWebpack))
     .pipe(uglify({
       mangle: {
         keep_fnames: true
       }
     }))
-    .pipe(gulp.dest('build/js'))
+    .pipe(gulp.dest(build_script))
     .pipe(browserSync.stream());
 }
+
+scripts.displayName = `Build: scripts`;
+
+module.exports = scripts;

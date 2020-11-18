@@ -1,9 +1,14 @@
 const gulp = require('gulp');
 const browserSync = require('browser-sync');
+const { src_images, build_images } = require('../config/directories');
 
-module.exports = function () {
+const images = function () {
   return gulp 
-    .src(['src/images/**'])
-    .pipe(gulp.dest('build/images/'))
+    .src(src_images)
+    .pipe(gulp.dest(build_images))
     .pipe(browserSync.stream());
 }
+
+images.displayName = `Build: images`;
+
+module.exports = images

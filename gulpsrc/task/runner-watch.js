@@ -6,10 +6,10 @@ const style = require(`./build-style.js`);
 const script = require(`./build-script.js`);
 const data = require(`./build-data.js`);
 
-module.exports = function () {
+const watch = function () {
   browserSync.init({
     server:{
-      baseDir : './build/'
+      baseDir : './build/',
     }
   });
 
@@ -21,3 +21,7 @@ module.exports = function () {
   gulp.watch('src/html/**/*', gulp.series(html))
   gulp.watch('src/data/*', gulp.series(data))
 }
+
+watch.displayName = `Runner: watch`;
+
+module.exports = watch;
