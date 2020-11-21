@@ -1,5 +1,5 @@
 const del = require('del');
-const { build } = require('../config/names');
+const { build } = require('../config/directories');
 
 const clean = function () {
   return del(build);
