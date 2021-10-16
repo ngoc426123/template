@@ -35,3 +35,41 @@ li {
 img {
   max-width: 100%;
 }
+
+img {
+  max-width: 100%;
+}
+
+input {
+  outline: none;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.container {
+  max-width: 1200px !important;
+}
+
+.page {
+  max-width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.text {
+  &-left {
+    text-align: left;
+  }
+
+  &-center {
+    text-align: center;
+  }
+
+  &-right {
+    text-align: right;
+  }
+}
