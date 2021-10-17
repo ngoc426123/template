@@ -5,6 +5,6 @@ const clean = function () {
   return del(build);
 }
 
-clean.displayName = `Runner: clean`;
+clean.displayName = 'Runner: clean';
 
 module.exports = clean

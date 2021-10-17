@@ -13,6 +13,6 @@ const html = function () {
     .pipe(browserSync.stream());
 }
 
-html.displayName = `Build: html`;
+html.displayName = 'Build: html';
 
 module.exports = html

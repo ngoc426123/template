@@ -9,6 +9,6 @@ const data = function () {
     .pipe(browserSync.stream());
 }
 
-data.displayName = `Build: data`;
+data.displayName = 'Build: data';
 
 module.exports = data;

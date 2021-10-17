@@ -18,6 +18,6 @@ const scripts = function () {
     .pipe(browserSync.stream());
 }
 
-scripts.displayName = `Build: scripts`;
+scripts.displayName = 'Build: scripts';
 
 module.exports = scripts;

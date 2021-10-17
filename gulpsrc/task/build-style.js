@@ -22,6 +22,6 @@ const styles = function () {
     .pipe(browserSync.stream());
 }
 
-styles.displayName = `Build: styles`;
+styles.displayName = 'Build: styles';
 
 module.exports = styles

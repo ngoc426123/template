@@ -9,6 +9,6 @@ const images = function () {
     .pipe(browserSync.stream());
 }
 
-images.displayName = `Build: images`;
+images.displayName = 'Build: images';
 
 module.exports = images

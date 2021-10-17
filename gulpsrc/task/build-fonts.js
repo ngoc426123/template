@@ -9,6 +9,6 @@ const font = function () {
     .pipe(browserSync.stream());
 }
 
-font.displayName = `Build: fonts`;
+font.displayName = 'Build: fonts';
 
 module.exports = font
