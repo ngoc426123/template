@@ -1,8 +1,7 @@
-const browserSync = require('browser-sync');
+const browserSync = require('browser-sync').get('server01');
 
-const reload = function (cb) {
+const reload = function () {
   browserSync.reload();
-  cb();
 }
 
 reload.displayName = 'Reload...'

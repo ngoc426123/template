@@ -3,41 +3,33 @@ const isProduct = process.env.NODE_ENV === 'production';
 
 // DIRECTORIES PATH
 const src = './src';
-const static = 'static';
-const dist = 'build';
+const assets = 'assets';
+const build = 'build';
 
 // DIRECTORIES SOURCE
-const src_html = '/html/*.pug';
-const src_style = '/scss/app.scss';
-const src_script = '/js/all.js';
-const src_data = '/data/*';
-const src_images = '/images/**';
-const src_fonts = ['node_modules/@fortawesome/fontawesome-free/webfonts/*', `${src}/fonts/**`];
-
-// DIRECTORIES BUILD
-const build = isProduct ? dist : static;
-const build_html = '';
-const build_style = '/css';
-const build_script = '/js';
-const build_data = '/data';
-const build_images = '/images';
-const build_fonts = '/fonts';
+const html = '/html/*.pug';
+const style = '/scss/app.scss';
+const script = '/js/all.js';
+const data = '/data/*';
+const images = '/images/**';
+const fonts = ['node_modules/@fortawesome/fontawesome-free/webfonts/*', `${assets}/fonts/**`];
 
 // MODULE EXPORT
 exports.src = src;
-exports.src_html = src + src_html;
-exports.src_style = src + src_style;
-exports.src_script = src + src_script;
-exports.src_data = src + src_data;
-exports.src_images = src + src_images;
-exports.src_fonts = src_fonts;
+exports.src_html = src + html;
+exports.src_style = src + style;
+exports.src_script = src + script;
+exports.src_data = assets + data;
+exports.src_images = assets + images;
+exports.src_fonts = fonts;
 
 exports.build = build;
-exports.build_html = build + build_html;
-exports.build_style = build + build_style;
-exports.build_script = build + build_script;
-exports.build_data = build + build_data;
-exports.build_images = build + build_images;
-exports.build_fonts = build + build_fonts;
+exports.build_html = build + '';
+exports.build_style = build + '/css';
+exports.build_script = build + '/js';
+exports.build_data = build + '/data';
+exports.build_images = build + '/images';
+exports.build_fonts = build + '/fonts';
 
-exports.static = static;
+exports.path_assets = assets;
+exports.path_html = src + '/html';
