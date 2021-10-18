@@ -4,6 +4,7 @@
   "description": "Template html",
   "main": "gulpfile.js",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.4",
     "@icon/icofont": "^1.0.1-alpha.1",
     "bootstrap": "^5.1.3",
     "jquery": "^3.6.0",

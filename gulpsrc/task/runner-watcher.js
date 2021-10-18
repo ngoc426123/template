@@ -4,7 +4,7 @@ const style = require(`./build-style.js`);
 const script = require(`./build-script.js`);
 const data = require(`./build-data.js`);
 
-const watch = function () {
+const watcher = function () {
   gulp.watch('src/scss/*', gulp.series(style));
   gulp.watch('src/scss/**/*', gulp.series(style));
   gulp.watch('src/js/*', gulp.series(script));
@@ -14,6 +14,6 @@ const watch = function () {
   gulp.watch('src/html/**/*', reload);
 }
 
-watch.displayName = `Runner: watch`;
+watcher.displayName = 'Runner: watcher';
 
-module.exports = watch;
+module.exports = watcher;
