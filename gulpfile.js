@@ -1,3 +1,7 @@
+// SET ENVIRONMENT
+process.env.NODE_ENV = ~['build'].indexOf(process.argv[2]) ? 'production' : 'development';
+
+// IMPORT TASK
 const gulp = require('gulp');
 const { parallel } = require('gulp');
 const viewer = require('./gulpsrc/task/runner-viewer');
@@ -11,8 +15,6 @@ const fonts = require('./gulpsrc/task/build-fonts');
 const images = require('./gulpsrc/task/build-images');
 const runViewer = parallel(viewer, watch);
 
-// SET ENVIRONMENT
-process.env.NODE_ENV = ~['build'].indexOf(process.argv[2]) ? 'production' : 'development';
 
 // TASK
 gulp.task('default', gulp.series(
