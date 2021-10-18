@@ -1,28 +1,24 @@
-const express = require('express');
-const { path_assets, path_html } = require('../config/directories.js');
-const { STATIC_PORT } = require('../config/port');
-const app = express();
+const nodemon = require('nodemon');
+const browserSync = require('browser-sync');
+const { DEV_PORT, STATIC_PORT, UI_PORT } = require('../config/port');
+const script = './express/index.js';
+const watch = false;
 
 const server = function () {
-  // ROUTER
-  app.get('/', (req, res) => {
-    res.redirect('index.html');
+  nodemon({
+    script,
+    watch
+  }).on('start', () => {
+    setTimeout(() => {
+      browserSync.init({
+        port: DEV_PORT,
+        proxy: `http://localhost:${STATIC_PORT}`,
+        ui: {
+          port: UI_PORT
+        },
+      });
+    }, 1500);
   });
-  app.get('/*.html', (req, res) => {
-    const { path: url } = req;
-    const file = /[/]?(.+)\.html/.exec(url)
-
-    res.render(file[1]);
-  });
-
-  // SETTER
-  app.set('views', path_html);
-  app.set('view engine', 'pug');
-  app.use(express.static(path_assets));
-
-
-  // LISTEN
-  app.listen(STATIC_PORT);
 }
 
 server.displayName = 'Runner: server'

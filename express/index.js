@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const { src, static } = require('../gulpsrc/config/directories.js');
+const { src, staticPath } = require('../gulpsrc/config/directories.js');
 const viewsSrc = `${src}/html`;
 const { STATIC_PORT } = require('../gulpsrc/config/port');
 
@@ -18,7 +18,7 @@ app.get('/*.html', (req, res) => {
 // SETTER
 app.set('views', viewsSrc);
 app.set('view engine', 'pug');
-app.use(express.static(static))
+app.use(express.static(staticPath))
 
 // LISTEN
 app.listen(STATIC_PORT, console.log(`_____The Site run on: http://localhost:${STATIC_PORT}_____`));

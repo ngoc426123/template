@@ -1,7 +1,6 @@
 // SET ENVIRONMENT
 process.env.NODE_ENV = ~['build'].indexOf(process.argv[2]) ? 'production' : 'development';
 
-// IMPORT TASK
 const gulp = require('gulp');
 const { parallel } = require('gulp');
 const server = require('./gulpsrc/task/runner-server');
