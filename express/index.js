@@ -14,6 +14,12 @@ app.get('/*.html', (req, res) => {
 
   res.render(file[1]);
 });
+app.post('/*.html', (req, res) => {
+  const { path: url } = req;
+  const file = /[/]?(.+)\.html/.exec(url)
+
+  res.render(file[1]);
+});
 
 // SETTER
 app.set('views', viewsSrc);
