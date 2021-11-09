@@ -2,6 +2,7 @@ const { ProvidePlugin } = require('webpack');
 const { resolve } = require('path');
 const { src, src_script } = require('../config/directories');
 const { script_name } = require('../config/names');
+const isDevelopment = process.env.NODE_ENV === 'development'
 
 module.exports = {
   entry: ['babel-polyfill', src_script],
@@ -34,5 +35,6 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  devtool: isDevelopment ? 'eval' : false,
 };
