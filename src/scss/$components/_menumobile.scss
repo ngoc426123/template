@@ -1,0 +1,214 @@
+.menumobile {
+  $this: &;
+
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-end;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99;
+  pointer-events: none;
+
+  // ICON
+  &__icon {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    cursor: pointer;
+
+    span,
+    &::before,
+    &::after {
+      content: "";
+      width: 30px;
+      height: 2px;
+      background-color: $color-black-2;
+      position: absolute;
+      left: 5px;
+      transition: transform .2s ease;
+    }
+
+    span {
+      top: 50%;
+    }
+
+    &::before {
+      top: 11px;
+    }
+
+    &::after {
+      top: 29px;
+    }
+
+    // OPEN
+    &.\--open {
+      span {
+        transform: translateX(-5px);
+        opacity: 0;
+      }
+
+      &::before {
+        top: 20px;
+        transform: rotate(-45deg);
+      }
+
+      &::after {
+        top: 20px;
+        transform: rotate(45deg);
+      }
+    }
+  }
+
+  // OVERFLOW
+  &__overflow {
+    background-color: rgba($color-black-1, .35);
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    opacity: 0;
+    visibility: hidden;
+    transition: all .2s ease;
+  }
+
+  // WRAPPER
+  &__wrapper {
+    width: 100%;
+    max-width: 400px;
+    margin-left: 80px;
+    position: relative;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(100%);
+    transition: all .2s ease;
+    z-index: 2;
+  }
+
+  // CONTAINER
+  &__container {
+    height: 100%;
+    padding: 25px 15px;
+    background-color: $color-white-1;
+    overflow: hidden;
+    overflow-y: auto;
+  }
+
+  // NAVIGATION
+  &__navigation {
+    // LEVEL 1
+    ul {
+      position: relative;
+    }
+
+    li {
+      position: relative;
+
+      a {
+        display: block;
+        padding: 11px 0;
+        font-size: 18px;
+        line-height: 28px;
+        text-transform: uppercase;
+      }
+
+      > span {
+        width: 40px;
+        height: 40px;
+        position: absolute;
+        top: 7px;
+        right: 0;
+        cursor: pointer;
+
+        &::before {
+          content: "\f107";
+          @extend %font-icon;
+          position: absolute;
+          top: 50%;
+          right: 10px;
+          transform: translateY(-50%);
+          transition: transform .2s ease;
+        }
+      }
+
+      &.\--active {
+        > span {
+          &::before {
+            transform: translateY(-50%) rotate(180deg);
+          }
+        }
+      }
+    }
+
+    // LEVEL 2
+    ul ul {
+      display: none;
+
+      a {
+        padding: 5px 0;
+        padding-left: 15px;
+        font-size: 16px;
+        line-height: 24px;
+        text-transform: none;
+      }
+    }
+  }
+
+  // SEARCH
+  &__search {
+    width: 100%;
+    margin-bottom: 20px;
+    position: relative;
+
+    input {
+      width: 100%;
+      height: 40px;
+      border: solid 1px $color-gray-1;
+      padding: 5px 15px;
+      padding-right: 40px;
+    }
+
+    button {
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      border: none;
+      background: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+
+      &::before {
+        content: "\f002";
+        @extend %font-icon;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+
+  /******
+  MODIFY
+  ******/
+  // OPEN
+  &.\--open {
+    pointer-events: auto;
+
+    #{$this}__overflow {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    #{$this}__wrapper {
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+    }
+  }
+}
