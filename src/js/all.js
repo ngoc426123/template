@@ -5,3 +5,4 @@ import './_init/core'
 // PLUGIN
 import './plugins/main'
 import './plugins/table-responsive'
+import './plugins/menumobile'
