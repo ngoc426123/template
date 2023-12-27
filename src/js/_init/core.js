@@ -6,12 +6,15 @@ export default function Plugin (Class) {
     const dataSelectorName = `[data-${selectorName}]`;
 
     $.fn[pluginName] = function () {
-      const self = this;
-      const plugin = new param();
-      plugin.$element = self;
-      plugin.options = pluginOption;
-      plugin.props = {};
-      plugin.init();
+      this.each(function() {
+        const self = this;
+        const plugin = new param();
+
+        plugin.$element = $(self);
+        plugin.options = pluginOption;
+        plugin.props = {};
+        plugin.init();
+      });
     }
 
     !!$(dataSelectorName).length && $(dataSelectorName)[pluginName]();
