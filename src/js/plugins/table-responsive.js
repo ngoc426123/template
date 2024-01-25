@@ -1,6 +1,6 @@
 @Plugin({
   options: {
-    pluginName: 'TableRespsonsive',
+    pluginName: `TableRespsonsive`,
 
     dataTableHead: 'th',
     dataTableRow: 'tr',

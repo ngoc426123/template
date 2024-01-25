@@ -15,12 +15,12 @@ p {
 
 a {
   color: $color-black-1;
-  text-decoration: none;
 
   &:hover,
   &:focus,
   &:active {
-    transition: all .3s ease;
+    text-decoration: none;
+    transition: all .3s linear;
   }
 }
 

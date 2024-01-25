@@ -1,0 +1,14 @@
+header.header(data-header)
+  .container
+    .header__main
+      .header__logo
+        +link("index.html", "logo")
+          +img("images/logo.png", "logo")
+      .header__tools
+        .header__menu
+          +list([
+            { text: 'Home', title: 'home', href: 'index.html' },
+            { text: 'About', title: 'About', href: 'about.html' },
+            { text: 'Recruit', title: 'Recruit', href: 'recruit.html' },
+            { text: 'Contact', title: 'Contact', href: 'contact.html' },
+          ])
