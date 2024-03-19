@@ -1,7 +1,5 @@
 @Plugin({
   options: {
-    pluginName: 'TableRespsonsive',
-
     dataTableHead: 'th',
     dataTableRow: 'tr',
     dataTableCell: 'td',

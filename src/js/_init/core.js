@@ -10,8 +10,19 @@ export default function Plugin (Class) {
         const self = this;
         const plugin = new param();
 
+        plugin.addEvent = ($ele, event, callback, opts) => {
+          const { nameSpace, delegate } = opts;
+          const eventName = `${event}.${nameSpace}`;
+
+          $ele
+            .off(eventName, delegate)
+            .on(eventName, delegate, callback.bind(plugin));
+        };
         plugin.$element = $(self);
-        plugin.options = pluginOption;
+        plugin.options = {
+          PluginName: pluginName,
+          ...pluginOption,
+        };
         plugin.props = {};
         plugin.init();
       });

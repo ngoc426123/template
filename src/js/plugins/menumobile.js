@@ -1,6 +1,5 @@
 @Plugin({
   options: {
-    pluginName: 'Menumobile',
     dataMobileIcon: '[data-menumobile-icon]',
     dataOverflow: '[data-menumobile-overflow]',
     dataNavigation: '[data-menumobile-navigation]',
@@ -37,26 +36,26 @@ export default class Menumobile {
 
       if ($item.find('> ul').length) $item.append($toggle);
     });
-
   }
 
   handleEvent () {
     const {
-      pluginName,
+      PluginName,
       dataToggle,
     } = this.options;
 
-    this.$icon
-      .off(`click.${pluginName}ClickToggleMenu`)
-      .on(`click.${pluginName}ClickToggleMenu`, this.handleEventToggleMenumobile.bind(this));
+    this.addEvent(this.$icon, 'click', this.handleEventToggleMenumobile, {
+      nameSpace: PluginName,
+    });
 
-    this.$overflow
-      .off(`click.${pluginName}ClickOverflow`)
-      .on(`click.${pluginName}ClickOverflow`, this.handleEventOverflow.bind(this));
+    this.addEvent(this.$overflow, 'click', this.handleEventOverflow, {
+      nameSpace: PluginName,
+    });
 
-    this.$element
-      .off(`click.${pluginName}ClickToggleNavigation`)
-      .on(`click.${pluginName}ClickToggleNavigation`, dataToggle , this.handleEventToggleNavigation.bind(this));
+    this.addEvent(this.$element, 'click', this.handleEventToggleNavigation, {
+      nameSpace: PluginName,
+      delegate: dataToggle,
+    });
   }
 
   handleEventToggleMenumobile() {

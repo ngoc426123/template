@@ -1,4 +1,6 @@
 html {
+  border: none !important;
+
   &.frozen {
     height: 100vh;
     overflow: hidden;
