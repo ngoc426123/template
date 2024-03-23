@@ -15,7 +15,6 @@ export default class Main {
     } = this.options;
     
     this.$table = this.$element.find(dataTable);
-    add
   }
 
   async handleEvent () {
