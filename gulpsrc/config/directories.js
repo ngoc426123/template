@@ -3,8 +3,8 @@ const isProduct = process.env.NODE_ENV === 'production';
 
 // DIRECTORIES PATH
 const srcPath = './src';
-const staticPath = 'static';
-const distPath = 'build';
+const staticPath = './static';
+const distPath = './build';
 
 // DIRECTORIES SOURCE
 const src_html = [
