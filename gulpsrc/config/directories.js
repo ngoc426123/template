@@ -17,7 +17,7 @@ const src_script = '/js/all.js';
 const src_script_customs = '/js/customs.js';
 const src_data = '/data/*';
 const src_images = '/images/**';
-const src_fonts = ['node_modules/@fortawesome/fontawesome-free/webfonts/*', `${srcPath}/fonts/**`];
+const src_fonts = [`${srcPath}/fonts/**`];
 
 // DIRECTORIES BUILD
 const build = isProduct ? distPath : staticPath;

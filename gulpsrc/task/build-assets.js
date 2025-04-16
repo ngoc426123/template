@@ -13,7 +13,7 @@ const buildAssets = series(
   scripts,
   scriptsCustoms,
   data,
-  fonts,
+  // fonts,
   images
 );
 
