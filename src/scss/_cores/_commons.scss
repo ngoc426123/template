@@ -5,12 +5,12 @@ h4,
 h5 {
   margin: 0;
   padding: 0;
-  padding-bottom: 5px;
+  padding-bottom: rem(5);
 }
 
 p {
   margin: 0;
-  padding-bottom: 5px;
+  padding-bottom: rem(5);
 }
 
 a {
@@ -46,7 +46,7 @@ table {
 }
 
 .container {
-  max-width: 1200px !important;
+  max-width: rem(1200);
 }
 
 .page {
@@ -76,13 +76,13 @@ table {
 
     &t {
       &-#{$spacing} {
-        margin-top: #{$spacing}px;
+        margin-top: rem(#{$spacing});
       }
     }
 
     &b {
       &-#{$spacing} {
-        margin-bottom: #{$spacing}px;
+        margin-bottom: rem(#{$spacing});
       }
     }
   }
@@ -92,13 +92,13 @@ table {
 
     &t {
       &-#{$spacing} {
-        padding-top: #{$spacing}px;
+        padding-top: rem(#{$spacing});
       }
     }
 
     &b {
       &-#{$spacing} {
-        padding-bottom: #{$spacing}px;
+        padding-bottom: rem(#{$spacing});
       }
     }
   }

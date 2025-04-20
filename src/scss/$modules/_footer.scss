@@ -1,7 +1,7 @@
 .footer{
   &__menubot {
     background-color: $color-white-2;
-    padding: 15px 0;
+    padding: rem(15) 0;
 
     ul {
       display: flex;
@@ -9,9 +9,9 @@
     }
     
     li {
-      padding-right: 20px;
-      margin-right: 20px;
-      border-right: solid 1px $color-gray-1;
+      padding-right: rem(20);
+      margin-right: rem(20);
+      border-right: solid rem(1) $color-gray-1;
 
       &:last-child {
         margin-right: 0;
@@ -22,19 +22,19 @@
 
     a {
       display: block;
-      font-size: 16px;
-      line-height: 16px;
+      font-size: rem(16);
+      line-height: rem(16);
     }
   }
 
   &__main {
-    padding: 20px 0;
+    padding: rem(20) 0;
   }
 
   &__copyright {
     text-align: center;
-    font-size: 12px;
-    line-height: 20px;
+    font-size: rem(12);
+    line-height: rem(20);
     color: $color-gray-2;
   }
 }

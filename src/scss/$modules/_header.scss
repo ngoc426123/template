@@ -3,11 +3,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 15px 0;
+    padding: rem(15) 0;
   }
 
   &__logo {
-    max-width: 90px;
+    max-width: rem(90);
   }
 
   &__tools {
@@ -22,7 +22,7 @@
     }
     
     li {
-      margin-right: 30px;
+      margin-right: rem(30);
 
       &::last-child {
         margin-right: 0;
@@ -30,14 +30,14 @@
 
       &.home {
         span {
-          padding-left: 30px;
+          padding-left: rem(30);
           position: relative;
 
           &::before {
             content: "\f015";
             @extend %font-icon;
             @extend %pll;
-            font-size: 13px;
+            font-size: rem(13);
           }
         }
       }
@@ -45,8 +45,8 @@
 
     a {
       display: block;
-      font-size: 16px;
-      line-height: 24px;
+      font-size: rem(16);
+      line-height: rem(24);
       text-transform: uppercase;
     }
   }
