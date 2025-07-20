@@ -8,13 +8,13 @@ const { STATIC_PORT } = require('../gulpsrc/config/port');
 app.get('/', (req, res) => {
   res.redirect('index.html');
 });
-app.get('/*.html', (req, res) => {
+app.get('/*splat.html', (req, res) => {
   const { path: url } = req;
   const file = /[/]?(.+)\.html/.exec(url)
 
   res.render(file[1]);
 });
-app.post('/*.html', (req, res) => {
+app.post('/*splat.html', (req, res) => {
   const { path: url } = req;
   const file = /[/]?(.+)\.html/.exec(url)
 
