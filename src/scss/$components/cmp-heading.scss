@@ -1,0 +1,21 @@
+.cmp-heading {
+  margin-bottom: rem(30);
+
+  // TITLE
+  &__title {
+    display: block;
+  }
+
+  &__title-text {
+    padding: 0;
+    font-size: rem(30);
+    line-height: rem(38);
+    font-weight: 700;
+  }
+
+  // DESC
+  &__desc {
+    font-size: rem(16);
+    line-height: rem(24);
+  }
+}

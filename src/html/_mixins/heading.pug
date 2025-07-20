@@ -1,0 +1,8 @@
+mixin heading({ title, desc })
+
+  .cmp-heading&attributes(attributes)
+    .cmp-heading__title
+      h2.cmp-heading__title-text!=title
+    if desc
+      .cmp-heading__desc!=desc
+      

@@ -12,5 +12,13 @@ header.header(data-header)
             { text: 'Recruit', title: 'Recruit', href: '#' },
             { text: 'Contact', title: 'Contact', href: '#' },
           ])
+        .header__language(data-dropdown)
+          .header__language-toggle(data-toggle) English
+          .header__language-dropdown
+            .header__language-list
+              +list([
+                { text: 'English', title: 'English', href: '#' },
+                { text: 'Tiếng Việt', title: 'Tiếng Việt', href: '#' },
+              ])
         .menumobile__icon.d-block.d-lg-none(data-menumobile-icon)
           span

@@ -1,4 +1,7 @@
-.header{
+.header {
+  $this: &;
+
+  // MAIN
   &__main {
     display: flex;
     align-items: center;
@@ -6,6 +9,7 @@
     padding: rem(15) 0;
   }
 
+  // LOGO
   &__logo {
     max-width: rem(90);
   }
@@ -16,6 +20,8 @@
   }
 
   &__menu {
+    margin-right: rem(30);
+
     ul {
       display: flex;
       align-items: center;
@@ -24,7 +30,7 @@
     li {
       margin-right: rem(30);
 
-      &::last-child {
+      &:last-child {
         margin-right: 0;
       }
 
@@ -45,9 +51,89 @@
 
     a {
       display: block;
-      font-size: rem(16);
-      line-height: rem(24);
+      font-size: rem(14);
+      line-height: rem(20);
+      font-weight: 600;
       text-transform: uppercase;
+    }
+  }
+
+  // LANGUAGE
+  &__language {
+    max-width: rem(200);
+    margin-right: rem(24);
+    position: relative;
+
+    @include mq(lg) {
+      margin-right: auto;
+    }
+
+    &.\--active {
+      #{$this}__language-dropdown {
+        display: block;
+      }
+    }
+  }
+
+  &__language-toggle {
+    display: inline-block;
+    padding: rem(8) 0;
+    padding-right: rem(22);
+    font-size: rem(14);
+    line-height: rem(20);
+    font-weight: 600;
+    position: relative;
+    cursor: pointer;
+    text-transform: uppercase;
+
+    &::before {
+      content: "";
+      width: rem(20);
+      height: rem(20);
+      background-color: $color-black-1;
+      mask: $icon-caret-down no-repeat center;
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+    }
+  }
+
+  &__language-dropdown {
+    display: none;
+    width: rem(200);
+    margin-top: rem(8);
+    background: $color-white-1;
+    border: solid rem(1) $color-gray-2;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 1;
+
+    @include mq(lg) {
+      margin-top: rem(8);
+      right: auto;
+      left: 0;
+    }
+  }
+
+  &__language-list {
+    li {
+      &:not(:last-child) {
+        border-bottom: solid rem(1) $color-white-1;
+      }
+    }
+
+    a {
+      display: block;
+      padding: rem(11) rem(16);
+      font-size: rem(14);
+      line-height: rem(20);
+      font-weight: 600;
+
+      &:hover {
+        color: $color-blue-1;
+      }
     }
   }
 }

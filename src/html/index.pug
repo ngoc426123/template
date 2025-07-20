@@ -1,42 +1,256 @@
 extends _layout/_layout
 
 block main-content
-  .main-content(data-main)
-    .container
-      .banner.mb-20
-        +img(src="images/banner-1.jpg", alt="banner 1")
-        +img(src="images/banner-2.jpg", alt="banner 2")
-        +img(src="images/banner-3.jpg", alt="banner 3")
-      .mb-20.pt-10
-        h1 Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-        h2 Est cum aut consequatur mollitia ducimus modi sequi ipsum?
-        h3 Neque necessitatibus esse id minus nam placeat cum corporis natus.
-      .mb-20.pt-10
-        p Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex, et deleniti quasi quidem quos neque animi quisquam repellat.
-        p Ut obcaecati officia atque sunt pariatur delectus molestias unde aliquid libero tenetur.
-        p Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo beatae sunt sit blanditiis animi eius similique,
-      .row.d-flex.justify-content-center.mb-20.pt-10
-        .col-12.col-lg-6.order-2
-          +list([
-            { text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.' },
-            { text: 'Quo beatae sunt sit blanditiis animi eius similique,' },
-            { text: 'Est cum aut consequatur mollitia ducimus modi sequi ipsum?' },
-            { text: 'Neque necessitatibus esse id minus' },
-            { text: 'Ex, et deleniti quasi quidem quos neque animi quisquam repellat.' },
-          ])
-        .col-12.col-lg-6.order-1
-          +list([
-            { text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.' },
-            { text: 'Quo beatae sunt sit blanditiis animi eius similique,' },
-            { text: 'Est cum aut consequatur mollitia ducimus modi sequi ipsum?' },
-            { text: 'Neque necessitatibus esse id minus' },
-            { text: 'Ex, et deleniti quasi quidem quos neque animi quisquam repellat.' },
-          ])
-      table(data-table).mb-20.pt-10
-        thead
-          th Avatar
-          th Gender
-          th Name
-          th Address
-          th Number
-          th Email
+	.main-content
+		.cmp-section.--gray-bg
+			.container
+				+heading({
+					title: 'Banner Section',
+					desc: 'Using For Homepage with Large Image with Text on top',
+				})
+				.cmp-banner.mb-20
+					+img(src="https://fastly.picsum.photos/id/6/1440/650.jpg?hmac=lASwoo0OuW8Bz12Senp20YukmTvQnSrTHBunBNQ2BHc", alt="banner 1")
+		.cmp-section
+			.container
+				+heading({
+					title: 'Slider',
+					desc: 'Using For Slide Image or anything (swiper)',
+				})
+				.cmp-slider-design.swiper(data-images-slider)
+					.swiper-wrapper
+						.swiper-slide
+							+img('https://fastly.picsum.photos/id/42/450/320.jpg?hmac=9TKgfuFkzDgFtkRUOsoBExA515YJQ4hNf0uvUDzLngg')
+						.swiper-slide
+							+img('http://fastly.picsum.photos/id/49/450/320.jpg?hmac=emiml8kC3N6Yg0DboNaj5inGbzaMRWlP5ag0FEOLdmk')
+						.swiper-slide
+							+img('https://fastly.picsum.photos/id/63/450/320.jpg?hmac=wKEE3b14yLC_mbazksKAuyxUP2PxIBjbFTZ3I4Nkf0M')
+						.swiper-slide
+							+img('https://fastly.picsum.photos/id/76/450/320.jpg?hmac=m7jtpL5z8knbZuHVvEjl6KEQlP-kRVuRYbbND-zVS54')
+						.swiper-slide
+							+img('https://fastly.picsum.photos/id/182/450/320.jpg?hmac=N56H4DRimhFsZmV-Ug129gV7hBxTiRwrUcqY2lyaN80')
+						.swiper-slide
+							+img('https://fastly.picsum.photos/id/191/450/320.jpg?hmac=mi1okmHMbz9y41ZkTg3mulHlsenYae0vlzVwuwWTu20')
+					.swiper-control
+						.swiper-pagination
+						.swiper-button-prev
+						.swiper-button-next
+		.cmp-section.--gray-bg
+			.container
+				+heading({
+					title: 'Typoraphy',
+					desc: 'Using For Every page hase page-content like news, contact, opinion...',
+				})
+				.mb-20.pt-10
+					h1 Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+					h2 Est cum aut consequatur mollitia ducimus modi sequi ipsum?
+					h3 Neque necessitatibus esse id minus nam placeat cum corporis natus.
+				.mb-20.pt-10
+					p Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex, et deleniti quasi quidem quos neque animi quisquam repellat.
+					p Ut obcaecati officia atque sunt pariatur delectus molestias unde aliquid libero tenetur.
+					p Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo beatae sunt sit blanditiis animi eius similique,
+		.cmp-section
+			.container
+				+heading({
+					title: 'List',
+					desc: 'Using like navigation or list menu items',
+				})
+				.row.d-flex.justify-content-center.mb-20.pt-10
+					.col-12.col-lg-6
+						+list([
+							{ text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.' },
+							{ text: 'Quo beatae sunt sit blanditiis animi eius similique,' },
+							{ text: 'Est cum aut consequatur mollitia ducimus modi sequi ipsum?' },
+							{ text: 'Neque necessitatibus esse id minus' },
+							{ text: 'Ex, et deleniti quasi quidem quos neque animi quisquam repellat.' },
+						])
+					.col-12.col-lg-6
+						+list([
+							{ text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', href: '#' },
+							{ text: 'Quo beatae sunt sit blanditiis animi eius similique', title: 'Quo beatae sunt sit blanditiis animi eius similique', href: '#' },
+							{ text: 'Est cum aut consequatur mollitia ducimus modi sequi ipsum?', title: 'Est cum aut consequatur mollitia ducimus modi sequi ipsum?', href: '#' },
+							{ text: 'Neque necessitatibus esse id minus', title: 'Neque necessitatibus esse id minus', href: '#' },
+							{ text: 'Ex, et deleniti quasi quidem quos neque animi quisquam repellat.', title: 'Ex, et deleniti quasi quidem quos neque animi quisquam repellat.', href: '#' },
+						])
+		.cmp-section.--gray-bg
+			.container
+				+heading({
+					title: 'Dropdown',
+					desc: 'Using when need click to open dropdown like language, menu toggle...',
+				})
+				.header__language(data-dropdown)
+					.header__language-toggle(data-toggle) English
+					.header__language-dropdown
+						.header__language-list
+							+list([
+								{ text: 'English', title: 'English', href: '#' },
+								{ text: 'Tiếng Việt', title: 'Tiếng Việt', href: '#' },
+							])
+		.cmp-section
+			.container
+				+heading({
+					title: 'Accordion',
+					desc: 'Using for toggle content like FAQ-comp or FAQ-page.',
+				})
+				.cmp-accordion(data-accordion)
+					.cmp-accordion__accordion(data-accordion-item)
+						.cmp-accordion__toggle(data-accordion-toggle) Lorem ipsum dolor sit amet
+						.cmp-accordion__dropdown(data-accordion-dropdown)
+							.cmp-accordion__wrap
+								.cmp-accordion__content
+									h1 Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+									h2 Est cum aut consequatur mollitia ducimus modi sequi ipsum?
+									h3 Neque necessitatibus esse id minus nam placeat cum corporis natus.
+					.cmp-accordion__accordion(data-accordion-item)
+						.cmp-accordion__toggle(data-accordion-toggle) Eb3 Visa Unskilled
+						.cmp-accordion__dropdown(data-accordion-dropdown)
+							.cmp-accordion__wrap
+								.cmp-accordion__content
+									+list([
+										{ text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.' },
+										{ text: 'Quo beatae sunt sit blanditiis animi eius similique,' },
+										{ text: 'Est cum aut consequatur mollitia ducimus modi sequi ipsum?' },
+										{ text: 'Neque necessitatibus esse id minus' },
+										{ text: 'Ex, et deleniti quasi quidem quos neque animi quisquam repellat.' },
+									])
+					.cmp-accordion__accordion(data-accordion-item)
+						.cmp-accordion__toggle(data-accordion-toggle) Ut obcaecati officia
+						.cmp-accordion__dropdown(data-accordion-dropdown)
+							.cmp-accordion__wrap
+								.cmp-accordion__content
+									p Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex, et deleniti quasi quidem quos neque animi quisquam repellat.
+									p Ut obcaecati officia atque sunt pariatur delectus molestias unde aliquid libero tenetur.
+									p Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo beatae sunt sit blanditiis animi eius similique,
+					.cmp-accordion__accordion(data-accordion-item)
+						.cmp-accordion__toggle(data-accordion-toggle) Quo beatae sunt sit blanditiis
+						.cmp-accordion__dropdown(data-accordion-dropdown)
+							.cmp-accordion__wrap
+								.cmp-accordion__content
+									p Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex, et deleniti quasi quidem quos neque animi quisquam repellat.
+									p Ut obcaecati officia atque sunt pariatur delectus molestias unde aliquid libero tenetur.
+									p Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo beatae sunt sit blanditiis animi eius similique,
+									p Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex, et deleniti quasi quidem quos neque animi quisquam repellat.
+									p Ut obcaecati officia atque sunt pariatur delectus molestias unde aliquid libero tenetur.
+									p Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo beatae sunt sit blanditiis animi eius similique,
+									p Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex, et deleniti quasi quidem quos neque animi quisquam repellat.
+									p Ut obcaecati officia atque sunt pariatur delectus molestias unde aliquid libero tenetur.
+									p Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo beatae sunt sit blanditiis animi eius similique,
+		.cmp-section.--gray-bg
+			.container
+				+heading({
+					title: 'Form',
+					desc: 'Using when need a from submit or contact form',
+				})
+				.row
+					.col-12.col-lg-6
+						.cmp-form(data-form)
+							.cmp-form__row
+								.cmp-form__label
+									label(for="email") Text
+								.cmp-form__control
+									input(type="text" name="email" id="email" placeholder="Enter email")
+							.cmp-form__row
+								.cmp-form__label
+									label(for="password") Password
+								.cmp-form__control
+									input(type="password" name="password" id="password" placeholder="Enter password")
+									button(type="button" data-btn-visible).cmp-form__btn-visible
+							.cmp-form__row
+								.cmp-form__label
+									label(for="Select") Select
+								.cmp-form__control
+									select(name="password" id="password" value="1")
+										option(value="1") option 1 
+										option(value="2") option 2 
+										option(value="3") option 3 
+										option(value="4") option 4 
+										option(value="5") option 5 
+							.cmp-form__row
+								.cmp-form__label
+									label(for="address") Image Uploading
+								.cmp-form__upload(data-upload)
+									label(for="upload-id") 
+										input(type="file" address="upload-id" id="upload-id" data-upload-file)
+									.cmp-form__upload-placeholder(data-upload-placeholder)
+										span Upload images
+							.cmp-form__row
+								.cmp-form__label
+									label(for="email") Textarea
+								.cmp-form__control
+									textarea( name="email" id="email" placeholder="Enter email")
+					.col-12.col-lg-6
+						.cmp-form(data-form)
+							.cmp-form__row
+								.cmp-form__checkbox
+									label(for="checkme-1")
+										input(type="checkbox" id="checkme-1" name="checkme-1")
+										span Check me 1
+								.cmp-form__checkbox
+									label(for="checkme-2")
+										input(type="checkbox" id="checkme-2" name="checkme-2")
+										span Check me 2
+								.cmp-form__checkbox
+									label(for="checkme-3")
+										input(type="checkbox" id="checkme-3" name="checkme-3")
+										span Check me 3
+							.cmp-form__row
+								.cmp-form__radio
+									label(for="radiome-1")
+										input(type="radio" id="radiome-1" name="radiome")
+										span Check me 1
+								.cmp-form__radio
+									label(for="radiome-2")
+										input(type="radio" id="radiome-2" name="radiome")
+										span Check me 2
+								.cmp-form__radio
+									label(for="radiome-3")
+										input(type="radio" id="radiome-3" name="radiome")
+										span Check me 3
+		.cmp-section
+			.container
+				+heading({
+					title: 'Button - CTA (Click 2 Action)',
+					desc: 'Using For render button for click action like button in form or any link style button',
+				})
+				.row
+					.col-12.col-lg-6
+						.mb-10
+							h3 With Button
+						.mb-10
+							button.cmp-btn
+								span Default button
+						.mb-10
+							button.cmp-btn.--primary
+								span Primary button
+						.mb-10 
+							button.cmp-btn.--secondary
+								span Secondary button
+						.mb-10 
+							button.cmp-btn.--outline
+								span Outline Button
+						.mb-10
+							button.cmp-btn.--primary.--block.--icon.--icon-angle
+								span Primary button
+						.mb-10 
+							button.cmp-btn.--secondary.--block.--icon.--icon-caret
+								span Secondary button
+						.mb-10 
+							button.cmp-btn.--outline.--block
+								span Outline Button
+					.col-12.col-lg-6
+						.mb-10
+							h3 With Link
+						.mb-10
+							+link('#', 'Default button').cmp-btn
+						.mb-10
+							+link('#', 'Primary button').cmp-btn.--primary
+						.mb-10 
+							+link('#', 'Secondary button').cmp-btn.--secondary
+						.mb-10 
+							+link('#', 'Outline Button').cmp-btn.--outline
+						.mb-10
+							+link('#', 'Primary button').cmp-btn.--primary.--block.--icon.--icon-angle
+						.mb-10 
+							+link('#', 'Secondary button').cmp-btn.--secondary.--block.--icon.--icon-caret
+						.mb-10 
+							+link('#', 'Outline Button').cmp-btn.--outline.--block
+		

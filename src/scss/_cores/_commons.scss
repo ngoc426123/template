@@ -16,12 +16,6 @@ p {
 a {
   color: $color-black-1;
   text-decoration: none;
-
-  &:hover,
-  &:focus,
-  &:active {
-    transition: all .3s ease;
-  }
 }
 
 ul,
@@ -46,7 +40,12 @@ table {
 }
 
 .container {
-  max-width: rem(1200);
+  max-width: rem(1240);
+  padding: 0 rem(20);
+
+  @include mq(lg) {
+    padding: 0 rem(16);
+  }
 }
 
 .page {
@@ -54,20 +53,6 @@ table {
   min-height: 100vh;
   overflow: hidden;
   position: relative;
-}
-
-.text {
-  &-left {
-    text-align: left;
-  }
-
-  &-center {
-    text-align: center;
-  }
-
-  &-right {
-    text-align: right;
-  }
 }
 
 @for $i from 1 through 10 {

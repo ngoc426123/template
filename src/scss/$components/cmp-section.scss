@@ -1,0 +1,19 @@
+.cmp-section {
+  padding: rem(100) 0;
+
+  @include mq(lg) {
+    padding: rem(80) 0;
+  }
+
+  @include mq(md) {
+    padding: rem(60) 0;
+  }
+
+  /**********************/
+  /*      MODIFY        */
+  /**********************/
+  // GRAY
+  &.\--gray-bg {
+    background-color: $color-gray-1;
+  }
+}
