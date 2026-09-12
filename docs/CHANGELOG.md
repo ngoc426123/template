@@ -13,6 +13,34 @@
 
 ---
 
+## 1.3.0
+
+Bảy cạm bẫy phát hiện khi chạy Phase 0 thật lần đầu. Bốn trong số đó gây lỗi **im lặng** —
+cửa sổ trắng hoặc treo mà terminal không báo gì — nên đưa thẳng vào docs thay vì để mỗi dự án
+tự vấp lại.
+
+- `01-architecture/project-structure.md` §8: CSP **dev** bắt buộc có `script-src ... 'unsafe-inline'`.
+  `@vitejs/plugin-react` chèn preamble React Refresh dạng inline script; chặn nó thì `main.jsx`
+  không chạy và **cửa sổ trắng trơn, terminal im lặng**. Production giữ nguyên nghiêm ngặt
+- §6: **preload bắt buộc là CommonJS** — `sandbox: true` không nạp được preload ESM. Với
+  `"type": "module"` thì đuôi phải là `.cjs`. Kèm cách ép `electron-vite` xuất phẳng ra
+  `out/main.js` + `out/preload.cjs`
+- §4: `electron-vite dev` phải có cờ **`--watch`**, nếu không sửa file Main sẽ không restart —
+  hụt một mục Definition of Done của chính Phase 0
+- §4: **ghim `server.host: '127.0.0.1'`**, đừng dùng `localhost`. Vite có thể chỉ bind `[::1]`
+  trong khi `wait-on` chờ IPv4 → `npm run dev` treo vĩnh viễn không báo lỗi
+- §5: cảnh báo `renderer config is missing` của `electron-vite build` là **đúng thiết kế**
+- §9: bảng khắc phục môi trường Windows, thêm `Error: Electron uninstall` (npm bỏ qua
+  postinstall của gói `electron`) và `NODE_MODULE_VERSION mismatch`
+- `04-guidelines/phase-framework.md` 0.9 + `coding-standards.md` §7: gỡ mâu thuẫn nội bộ —
+  ESLint là **một bộ cấu hình duy nhất ở gốc repo**, không phải mỗi package một bộ, vì
+  `shared/` không thuộc package nào
+
+Dự án cũ nên áp dụng nhưng không gấp: chỉ dự án nào đang dựng Phase 0 hoặc gặp đúng triệu
+chứng trên mới cần đọc lại.
+
+---
+
 ## 1.2.0
 
 Chỉ cần copy `docs/`, không cần thêm gì ở gốc repo.

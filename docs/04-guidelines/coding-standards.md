@@ -206,7 +206,7 @@ Comment giải thích nghiệp vụ viết **tiếng Việt**; thuật ngữ k�
 
 ## 7. ESLint — luật ranh giới FE/BE (quan trọng nhất)
 
-Cấu hình `overrides` theo đường dẫn, dùng `no-restricted-imports`:
+Cấu hình `overrides` theo đường dẫn, dùng `no-restricted-imports`. **Một file cấu hình duy nhất ở gốc repo** — đặt trong từng package thì `shared/` không được lint (xem `phase-framework.md` mục 0.9):
 
 | Phạm vi | Chặn | Thông điệp lỗi nên ghi |
 |---|---|---|

@@ -44,13 +44,17 @@
 | 0.1 | Dựng 3 thư mục: `frontend/`, `backend/`, `shared/` + `package.json` gốc làm task runner |
 | 0.2 | `frontend/package.json`: React + Vite. `vite.config.js` với `base: './'`, `outDir: '../backend/renderer'`, alias `@shared`, `server.fs.allow: ['..']` |
 | 0.3 | `backend/package.json`: **`electron` ở `devDependencies`** (xem cạm bẫy số 1), electron-vite, electron-builder |
-| 0.4 | `electron.vite.config.js`: build `main` + `preload` (preload bundle thành **một file**), alias `@shared` |
+| 0.4 | `electron.vite.config.js`: build `main` + `preload` (preload bundle thành **một file CommonJS** — `sandbox: true` không nạp được preload ESM), alias `@shared` |
 | 0.5 | Viết `backend/src/main/index.js` tối thiểu: tạo `BrowserWindow` với **đầy đủ cấu hình bảo mật** ở [overview.md §3](../01-architecture/overview.md) |
 | 0.6 | Main phân nhánh dev/prod: dev thì `loadURL(VITE_DEV_SERVER_URL)`, prod thì `loadFile('../renderer/index.html')` |
 | 0.7 | Preload rỗng, chỉ expose `window.api.app.getVersion()` để kiểm chứng cầu nối |
-| 0.8 | Script gốc `npm run dev`: dùng `concurrently` + `wait-on` chờ cổng 5173 rồi mới mở Electron |
-| 0.9 | Cấu hình ESLint + Prettier cho **từng package** + `.gitattributes` (`eol=lf`) + `.gitignore` (`out/`, `renderer/`, `release/`, `dist/`) |
+| 0.8 | Script gốc `npm run dev`: dùng `concurrently` + `wait-on` chờ cổng 5173 rồi mới mở Electron bằng `electron-vite dev --watch` (thiếu `--watch` thì sửa Main không restart) |
+| 0.9 | Cấu hình ESLint + Prettier **một bộ duy nhất ở gốc repo** (xem ghi chú dưới) + `.gitattributes` (`eol=lf`) + `.gitignore` (`out/`, `renderer/`, `release/`, `dist/`) |
 | 0.10 | **Cưỡng chế luật bằng máy**, không chỉ bằng văn bản — xem mục 3 bên dưới |
+
+> **Vì sao ESLint phải là một bộ ở gốc, không phải mỗi package một bộ**: `shared/` không thuộc package nào, nên cấu hình đặt trong `frontend/` hay `backend/` đều không với tới nó — vùng duy nhất cả hai bên cùng dùng lại là vùng không ai lint. Ngoài ra luật ranh giới ở [coding-standards.md §7](./coding-standards.md) được mô tả bằng `overrides` theo **đường dẫn**, mà đường dẫn thì phải nhìn thấy đồng thời cả ba vùng mới khớp được.
+>
+> Hệ quả: `eslint` và `prettier` nằm ở `devDependencies` của `package.json` gốc. Chúng là công cụ, không bao giờ bị đóng gói vào app.
 
 ### Phase 0 — Luật nào phải để máy cưỡng chế
 

@@ -29,7 +29,7 @@
     ├── electron-builder.yml
     ├── resources/               icon, ảnh tĩnh
     ├── src/{main,preload,services,repositories,schemas,db}
-    ├── out/                     (sinh ra) main.js, preload.js
+    ├── out/                     (sinh ra) main.js, preload.cjs
     ├── renderer/                (sinh ra) FE build đổ vào đây
     └── release/                 (sinh ra) file cài đặt
 ```
@@ -75,9 +75,13 @@ Thiếu `server.fs.allow` → dev báo *"The request url is outside of Vite serv
 
 ```
 npm run dev (ở gốc)
-  ├─ frontend:  vite dev            -> http://localhost:5173
-  └─ backend:   wait-on cổng 5173 -> electron-vite dev -> mở BrowserWindow
+  ├─ frontend:  vite dev                      -> http://127.0.0.1:5173
+  └─ backend:   wait-on cổng 5173 -> electron-vite dev --watch -> mở BrowserWindow
 ```
+
+> **Cờ `--watch` là bắt buộc.** `electron-vite dev` trần chỉ nạp lại Renderer; sửa file Main **không** khởi động lại tiến trình — hụt một mục Definition of Done của Phase 0.
+>
+> **Ghim địa chỉ, đừng dùng `localhost`.** Trên Windows, Vite có thể chỉ bind vào `[::1]` (IPv6) trong khi `wait-on tcp:127.0.0.1:5173` chờ IPv4 — `npm run dev` **treo vĩnh viễn** ở bước chờ mà không báo lỗi gì. Đặt `server.host: '127.0.0.1'` trong `vite.config.js`, rồi dùng đúng địa chỉ đó ở `wait-on`, ở CSP và ở `loadURL`.
 
 Main phân nhánh nạp nội dung:
 
@@ -94,12 +98,14 @@ Backend phải **đợi** Vite sẵn sàng rồi mới mở cửa sổ (`wait-on
 
 ```
 1. cd frontend && vite build        -> đổ thẳng vào backend/renderer/ (nhờ outDir)
-2. cd backend  && electron-vite build -> backend/out/main.js, preload.js
+2. cd backend  && electron-vite build -> backend/out/main.js, preload.cjs
 3. electron-builder install-app-deps   -> biên dịch lại better-sqlite3 theo ABI Electron
 4. electron-builder --win              -> backend/release/<AppName>-Setup-x.y.z.exe
 ```
 
 Bước 1 dùng `build.outDir: '../backend/renderer'` + `emptyOutDir: true` để bỏ hẳn bước copy — tránh khác biệt `xcopy` / `cp -r` giữa các hệ điều hành.
+
+> `electron-vite build` in cảnh báo `renderer config is missing`. **Đúng như thiết kế** — renderer do package `frontend/` build thẳng vào `backend/renderer/` ở bước 1, `electron-vite` chỉ lo `main` và `preload`. Không phải lỗi, đừng thêm khối `renderer` vào `electron.vite.config.js` để "chữa".
 
 ---
 
@@ -117,7 +123,9 @@ Bước 1 dùng `build.outDir: '../backend/renderer'` + `emptyOutDir: true` đ�
 
 Bổ sung:
 
-- Preload phải bundle thành **một file duy nhất**; đường dẫn truyền vào `BrowserWindow` là tuyệt đối (`path.join(__dirname, 'preload.js')`).
+- Preload phải bundle thành **một file duy nhất**; đường dẫn truyền vào `BrowserWindow` là tuyệt đối (`path.join(__dirname, 'preload.cjs')`).
+- **Preload bắt buộc là CommonJS.** `sandbox: true` không nạp được preload dạng ESM — đây là giới hạn của Electron, không phải tuỳ chọn. Nếu `backend/package.json` khai báo `"type": "module"` (Main viết bằng ESM) thì preload **phải** có đuôi `.cjs`, nếu không Node đọc nhầm định dạng và app không khởi động. Trong `electron.vite.config.js`: `preload.build.lib.formats: ['cjs']` + `rollupOptions.output.entryFileNames: 'preload.cjs'`.
+- Mặc định `electron-vite` xuất ra `out/main/index.js` và `out/preload/index.js`. Muốn phẳng thành `out/main.js` + `out/preload.cjs` như `backend/package.json` khai báo ở khoá `main` thì phải tự đặt `build.outDir: 'out'` và `rollupOptions.output.entryFileNames` cho **cả hai** target — nhớ để `emptyOutDir: true` ở `main` và `false` ở `preload`, vì hai lần build ghi vào cùng thư mục.
 - Dữ liệu **luôn** ghi vào `app.getPath('userData')`, không bao giờ ghi cạnh file `.exe`.
 
 ---
@@ -142,8 +150,12 @@ Hai chuỗi riêng, chọn theo `app.isPackaged`. Áp bằng `session.defaultSes
 
 | Môi trường | Yêu cầu |
 |---|---|
-| Development | Cho phép `http://localhost:5173` và `ws://localhost:5173` (Vite HMR cần cả hai) |
+| Development | Cho phép `http://localhost:5173` và `ws://localhost:5173` (Vite HMR cần cả hai) **và `script-src ... 'unsafe-inline'`** |
 | Production | `default-src 'self'`, không `unsafe-eval`, không `unsafe-inline`, không nguồn từ xa |
+
+> **Vì sao dev bắt buộc có `'unsafe-inline'` trong `script-src`**: `@vitejs/plugin-react` chèn preamble của React Refresh vào `<head>` dưới dạng **inline script**. CSP chặn nó thì `main.jsx` không chạy, **cửa sổ trắng trơn và terminal không báo gì** — lỗi chỉ hiện trong console của Renderer. Đây là nới lỏng **chỉ ở nhánh dev**; nhánh production giữ nguyên `script-src 'self'`.
+>
+> Không nới `'unsafe-eval'` ở bất kỳ môi trường nào — Electron sẽ in cảnh báo bảo mật.
 
 Sau khi bật CSP production, mở DevTools của **bản đóng gói** ít nhất một lần — CSP chặn tài nguyên im lặng, giao diện vỡ mà không báo lỗi.
 
@@ -152,6 +164,12 @@ Sau khi bật CSP production, mở DevTools của **bản đóng gói** ít nh�
 ## 9. Môi trường Windows
 
 `better-sqlite3` cần biên dịch native. Nếu `npm install` báo `gyp ERR!` hoặc `MSBuild.exe failed` → thiếu **Visual Studio Build Tools (Desktop development with C++)** và **Python 3**.
+
+| Triệu chứng | Nguyên nhân | Khắc phục |
+|---|---|---|
+| `gyp ERR!` hoặc `MSBuild.exe failed` khi `npm install` | Thiếu Visual Studio Build Tools (Desktop development with C++) và Python 3 | Cài cả hai, chạy lại `npm install` |
+| `Error: Electron uninstall` khi chạy dev | `npm install` đã bỏ qua postinstall của gói `electron`, binary chưa được tải về (kiểm tra: `backend/node_modules/electron/dist/` không tồn tại) | `node node_modules/electron/install.js` trong `backend/` |
+| `NODE_MODULE_VERSION mismatch` | Native module build theo ABI của Node, không phải của Electron | `npm run postinstall` ở `backend/` (`electron-builder install-app-deps`) |
 
 ---
 
