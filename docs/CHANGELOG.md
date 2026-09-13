@@ -13,6 +13,25 @@
 
 ---
 
+## 1.7.0
+
+Một phiên làm việc tiêu **653k token** chỉ riêng phần hội thoại, trong đó phần lớn không phải
+do trao đổi mà do **kết quả công cụ** dội vào: mỗi lần chạy `prettier --write` sau một lần sửa
+là công cụ phát hiện file đổi trên đĩa rồi nạp lại **nguyên văn** file đó. Vài file 200 dòng bị
+nạp lại ba, bốn lần. Cộng thêm thói quen đọc trọn tài liệu 300 dòng khi chỉ cần một mục.
+
+- `00-meta/agent-rules.md` §4.2 (mới): **năm luật tiết kiệm ngữ cảnh** — format một lần ở cuối,
+  đọc đúng mục, không đọc lại file vừa ghi, lọc output ngay trong lệnh, và **một phase một phiên**
+  (agent chủ động nhắc `/clear`, tự nhắc lại khi ngữ cảnh vượt 60%)
+- §4.2 có kèm rào chắn: đây là tiết kiệm **chi phí**, không phải tiết kiệm **công sức** — cấm lấy
+  làm cớ bỏ bước kiểm chứng ở §4.1 hay bỏ đọc tài liệu bắt buộc. Thiếu rào này thì luật mới sẽ
+  trở thành cái cớ hoàn hảo để phá luật vừa thêm ở 1.4.0
+- `CLAUDE.template.md`: thêm dòng rút gọn vào "Quy tắc làm việc"
+
+Dự án cũ nên áp dụng: không đụng tới code, chỉ đổi cách agent làm việc.
+
+---
+
 ## 1.6.0
 
 Danh sách người sắp xếp sai bảng chữ cái mà **không có lỗi nào** để lần ra: SQLite so chuỗi

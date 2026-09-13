@@ -105,6 +105,20 @@ Người dùng **không phải** nhắc bước này.
 
 ---
 
+### 4.2. Tiết kiệm ngữ cảnh
+
+Ngữ cảnh là tài nguyên hữu hạn và **tiêu một chiều**: hết là mất cả phiên làm việc, kéo theo mọi thứ đã tìm hiểu được trong phiên đó. Phần lớn ngữ cảnh bị tiêu **không phải** do hội thoại mà do **kết quả công cụ** — nội dung file, output lệnh, log build.
+
+| # | Luật | Vì sao |
+|---|---|---|
+| 1 | **Format một lần ở cuối** mỗi nhóm việc, không sau từng lần sửa | Chạy `prettier --write` xong là công cụ phát hiện file đổi trên đĩa và **dội nguyên văn file** vào hội thoại. Sửa 10 lần, format 10 lần, một file 200 dòng bị nạp lại 10 lần. Đây là khoản tốn lớn nhất và cũng dễ bỏ nhất |
+| 2 | **Đọc đúng mục cần**, không đọc cả file dài khi đã biết cần mục nào | `sed -n '/^## 5/,/^## 6/p'` thay cho đọc trọn một tài liệu 300 dòng |
+| 3 | **Không đọc lại file vừa ghi** để "kiểm tra" | Công cụ ghi đã báo lỗi nếu ghi hỏng. Đọc lại chỉ để yên tâm là trả tiền cho cảm giác |
+| 4 | **Lọc output ngay trong lệnh** | `\| tail -20`, `grep` lấy dòng tổng kết. Log `electron-builder` hay bảng TAP đầy đủ của test dài hàng trăm dòng mà thông tin thật chỉ nằm ở vài dòng |
+| 5 | **Một phase một phiên** | Xong một phase thì **nhắc người dùng `/clear`** trước khi sang phase mới. Phase sau chỉ cần `CLAUDE.md` và file kế hoạch của nó — cả hai tự nạp lại. Tự nhắc lại khi ngữ cảnh vượt **60%** |
+
+> **Đây là tiết kiệm chi phí, không phải tiết kiệm công sức.** Tuyệt đối không lấy mục này làm cớ để: bỏ bước kiểm chứng ở [mục 4.1](#41-bước-tự-rà-soát--bắt-buộc-trước-khi-báo-xong), bỏ đọc tài liệu bắt buộc của phase, hay rút gọn báo cáo đến mức người dùng không biết đã có chuyện gì. Đoán mò vì ngại đọc tốn nhiều hơn nhiều so với phần tiết kiệm được.
+
 ## 5. Trung thực khi báo cáo
 
 | Luật |

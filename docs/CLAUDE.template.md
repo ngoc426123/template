@@ -201,6 +201,8 @@ Chi tiết: `docs/00-meta/agent-rules.md`. Rút gọn:
 
 **Tự rà soát trước khi báo "xong"** (`agent-rules.md` §4.1) — áp cho mỗi tính năng và mỗi phase: đi thêm một lượt riêng bằng con mắt đi tìm lỗi · đối chiếu **từng mục** của kế hoạch với code thật · đọc lại **toàn văn** file vừa đụng · mỗi mục Definition of Done chỉ tick khi có lệnh đã chạy kèm output, trên **chính đường đi của app** — **suy luận không phải bằng chứng**, không kiểm chứng được thì để trống kèm lý do · báo cáo phải có mục **"Đã rà soát — phát hiện gì"**. Người dùng **không phải** nhắc.
 
+**Tiết kiệm ngữ cảnh** (`agent-rules.md` §4.2): format **một lần ở cuối** mỗi nhóm việc, không sau từng lần sửa · đọc đúng mục cần thay vì cả file dài · không đọc lại file vừa ghi · lọc output ngay trong lệnh · **một phase một phiên** — xong phase thì nhắc người dùng `/clear`, tự nhắc lại khi ngữ cảnh vượt **60%**. Đây là tiết kiệm **chi phí**, không phải tiết kiệm **công sức**.
+
 **Báo cáo trung thực**: làm được bao nhiêu báo bấy nhiêu · test fail thì nói fail kèm output · chưa chạy thì nói chưa chạy · liệt kê những gì đã tự quyết ngoài docs · **không bịa** phiên bản thư viện, tên API, hay kết quả lệnh.
 
 **Docs mâu thuẫn thực tế** → dừng, báo, hỏi sửa bên nào. Cấm âm thầm làm theo một bên.
