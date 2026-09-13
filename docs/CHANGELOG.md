@@ -13,6 +13,18 @@
 
 ---
 
+## 1.8.0
+
+- `03-frontend/ui-structure.md` §5.1a: bổ sung danh mục token dùng chung cho bố cục,
+  điều khiển, danh sách, viền/focus, chiều cao dòng và màu bổ trợ.
+- Quy định mật độ vẫn bảo đảm vùng bấm tối thiểu; kiểm tương phản chữ trên nền nhấn
+  ở cả hai theme và hover; phân biệt giá trị động của danh sách ảo với design token.
+
+Dự án cũ nên áp dụng khi bổ sung App Shell hoặc UI primitives. Giá trị thiết kế cụ thể
+vẫn thuộc từng dự án, không đưa palette hay kích thước nghiệp vụ vào template.
+
+---
+
 ## 1.7.0
 
 Một phiên làm việc tiêu **653k token** chỉ riêng phần hội thoại, trong đó phần lớn không phải

@@ -135,6 +135,29 @@ Toàn bộ giá trị thiết kế khai báo dưới dạng CSS custom property 
 | Lớp chồng | `--z-*` | `--z-dropdown: 100`, `--z-modal: 400`, `--z-toast: 500` |
 | Chuyển động | `--duration-*`, `--ease-*` | `--duration-fast: 120ms` |
 
+### 5.1a. Token bố cục, điều khiển và focus
+
+Các kích thước dùng lại trong App Shell và UI primitives cũng phải có token trong
+`tokens.css`. Danh mục dưới dùng chung giữa các dự án; giá trị cụ thể do thiết kế
+của từng dự án quyết định, không sao chép kích thước vào CSS của component.
+
+| Nhóm | Token |
+|---|---|
+| Khung ứng dụng | `--sidebar-width`, `--sidebar-collapsed-width`, `--topbar-height`, `--statusbar-height` |
+| Điều khiển | `--control-height`, `--control-min`, `--icon-size` |
+| Giới hạn nội dung | `--modal-width`, `--drawer-width`, `--search-width`, `--content-width` |
+| Danh sách | `--virtual-height`, `--row-height` |
+| Viền và focus | `--border-width`, `--focus-width`, `--focus-offset` |
+| Kiểu chữ | `--line-height` |
+| Màu bổ trợ | `--color-on-accent`, `--color-overlay`, `--color-bg-selected` |
+
+- Mật độ hiển thị có thể ghi đè token chiều cao hàng và điều khiển; vùng bấm vẫn đạt
+  tối thiểu 32 × 32 px theo §6.
+- Màu chữ trên nền nhấn phải dùng token riêng và đạt tương phản ở cả hai theme,
+  kể cả trạng thái hover. Không mặc định chữ trắng luôn phù hợp với màu nhấn.
+- Offset và tổng chiều cao của danh sách ảo tính từ dữ liệu/vị trí cuộn là giá trị
+  động, không phải design token cố định; chiều cao hàng dùng để tính phải khớp CSS.
+
 ### 5.2. Chế độ sáng / tối
 
 - Token khai báo hai bộ giá trị: mặc định (sáng) trên `:root`, bộ tối dưới `[data-theme="dark"]`.
