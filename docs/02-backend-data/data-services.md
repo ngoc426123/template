@@ -107,6 +107,7 @@ Trước khi ghi, Service luôn:
 3. Chuẩn hoá Unicode về **NFC** — quan trọng với tiếng Việt, vì cùng một chữ "ế" có thể được gõ bằng hai chuỗi mã khác nhau, gây lỗi so sánh và tìm kiếm.
 4. Ép kiểu số bằng kiểm tra tường minh, không dựa vào ép ngầm của JS.
 5. Cắt bớt chuỗi vượt giới hạn thay vì để DB ném lỗi `CHECK`.
+6. Sinh lại cột phụ `<cột>_ascii` cho mọi cột chữ có tìm kiếm hoặc sắp xếp — bỏ dấu, lowercase. Renderer không gửi cột này ([database-conventions.md §1.2c](./database-conventions.md)).
 
 ---
 

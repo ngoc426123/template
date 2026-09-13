@@ -13,6 +13,56 @@
 
 ---
 
+## 1.6.0
+
+Danh sách người sắp xếp sai bảng chữ cái mà **không có lỗi nào** để lần ra: SQLite so chuỗi
+theo byte UTF-8, nên `ORDER BY` trên cột có dấu xếp "Bé" trước "Ánh". Template đã có luật
+chuẩn hoá NFC nhưng chưa nói gì về collation, nên cái bẫy này lặp lại ở mọi dự án.
+
+- `02-backend-data/database-conventions.md` §1.2c (mới): **cột chữ cần sắp xếp hoặc tìm kiếm
+  phải có cột phụ `<cột>_ascii`**, do Service sinh lại mỗi lần ghi. Kèm ba chi tiết hay bị
+  bỏ sót: `đ`/`Đ` không phân rã bằng NFD, từ khoá tìm kiếm phải đi qua đúng hàm bỏ dấu đó,
+  và cột gốc `NULL` thì cột phụ cũng `NULL`
+- `04-guidelines/coding-standards-backend.md` §3.1: whitelist `sortBy` trỏ vào cột phụ,
+  không trỏ vào cột gốc
+- `02-backend-data/data-services.md` §3.3: thêm bước 6 vào danh sách chuẩn hoá trước khi ghi
+
+Dự án cũ nên áp dụng **trước khi phát hành**: thêm cột phụ sau khi đã có dữ liệu thật nghĩa là
+migration `ALTER TABLE` kèm backfill, trong khi lúc thiết kế bảng nó chỉ là một dòng.
+
+---
+
+## 1.5.0
+
+Luật "native module phải rebuild theo ABI của Electron" đã **lạc hậu** và làm hỏng `npm install`
+trên máy không có toolchain C++. Phát hiện khi bắt đầu Phase 2 của một dự án thật: `better-sqlite3`
+v13.0.3 nạp thẳng dưới Electron 44 (ABI 149) mà **không** cần build lại — nó phát hành binary theo
+**Node-API**, kèm sẵn `prebuilds/<os>-<arch>.node` trong gói npm. Nhưng
+`electron-builder install-app-deps` không nhận biết điều đó: thấy `binding.gyp` là gọi
+`node-gyp rebuild`, rồi chết với *Could not find any Python installation*.
+
+Hệ quả của luật cũ: `postinstall` bắt buộc → `npm install` thoát lỗi, và người mới phải cài
+Python 3 + Visual Studio Build Tools (~5–7GB) để biên dịch một thứ **không cần biên dịch**.
+
+- `01-architecture/project-structure.md` §6.1 (mới): **cách xác định native module có phải
+  rebuild không** — kiểm tra bằng `ls node_modules/<gói>/prebuilds`, không đoán. Có `prebuilds/`
+  → Node-API, không rebuild. Chỉ có `binding.gyp` → NAN, phải rebuild + cần toolchain
+- §6: thêm khoá `npmRebuild: false` vào bảng cấu hình then chốt; `postinstall` chuyển thành
+  **có điều kiện**. `asarUnpack: "**/*.node"` **giữ nguyên** — vẫn bắt buộc
+- §5 và `04-guidelines/coding-standards.md` §2.1: bước `install-app-deps` trong luồng build và
+  trong quy trình nâng Electron trở thành có điều kiện
+- §9: hai dòng khắc phục sự cố nói rõ phải đối chiếu §6.1 **trước** khi đi cài toolchain
+- `02-backend-data/storage-strategy.md` §1: đính chính dòng "cần biên dịch native" trong bảng
+  so sánh — không còn đúng từ `better-sqlite3` v12
+- `04-guidelines/phase-framework.md` 2.1, `04-guidelines/recipes.md` Công thức 6 bước 7,
+  `05-git/worktree.md`: cập nhật theo
+- `CLAUDE.template.md`: bảng "Cấu hình bắt buộc" đổi theo
+
+Dự án cũ **nên áp dụng sớm**: nếu `npm install` đang fail ở bước native module, đây là cách sửa.
+Kiểm tra `prebuilds/` trước khi cài bất kỳ toolchain nào.
+
+---
+
 ## 1.4.0
 
 Một mục Definition of Done của Phase 1 được tick bằng **suy luận** thay vì bằng chạy thử, và
@@ -109,7 +159,7 @@ Thêm cơ chế khởi tạo — trước đó template là thư mục trơ, kh�
 
 ## 1.0.0
 
-Bản đầu tiên. Tách từ tài liệu của dự án Elecrusion.
+Bản đầu tiên. Tách ra từ tài liệu của một dự án Electron + SQLite đang chạy thật.
 
 - `docs/` thành template thuần, không còn nghiệp vụ
 - Nghiệp vụ chuyển sang `project/`

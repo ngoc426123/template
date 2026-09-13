@@ -68,7 +68,7 @@ npm run install:all
 
 Worktree mới **không có** `node_modules` — git không theo dõi thư mục này. Bỏ qua bước cài là mọi lệnh sẽ lỗi.
 
-Nếu `npm install` biên dịch lại `better-sqlite3`, script `postinstall` (`electron-builder install-app-deps`) sẽ tự chạy. Nếu không, chạy tay:
+Với native module kiểu Node-API (như `better-sqlite3` v12+) thì không cần thêm bước nào — prebuild nằm sẵn trong gói npm. Chỉ native module kiểu NAN mới phải chạy tay ([project-structure.md §6.1](../01-architecture/project-structure.md)):
 
 ```bash
 cd backend && npx electron-builder install-app-deps

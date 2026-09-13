@@ -99,7 +99,7 @@ Backend phải **đợi** Vite sẵn sàng rồi mới mở cửa sổ (`wait-on
 ```
 1. cd frontend && vite build        -> đổ thẳng vào backend/renderer/ (nhờ outDir)
 2. cd backend  && electron-vite build -> backend/out/main.js, preload.cjs
-3. electron-builder install-app-deps   -> biên dịch lại better-sqlite3 theo ABI Electron
+3. electron-builder install-app-deps   -> CHỈ khi có native module kiểu NAN/ABI cũ (mục 6.1)
 4. electron-builder --win              -> backend/release/<AppName>-Setup-x.y.z.exe
 ```
 
@@ -119,7 +119,8 @@ Bước 1 dùng `build.outDir: '../backend/renderer'` + `emptyOutDir: true` đ�
 | `backend/electron-builder.yml` | `files` | `out/**`, `renderer/**`, `package.json` | Thiếu `renderer/**` → màn hình trắng |
 | | `asarUnpack` | `"**/*.node"` | Bản đóng gói crash: *Cannot find module ...node* |
 | | `directories.output` | `release` | |
-| `backend/package.json` | `postinstall` | `electron-builder install-app-deps` | `NODE_MODULE_VERSION mismatch` |
+| | `npmRebuild` | `false` khi mọi native module là Node-API (mục 6.1) | Đóng gói đi rebuild thứ không cần rebuild → đòi toolchain C++ |
+| `backend/package.json` | `postinstall` | `electron-builder install-app-deps` — **chỉ khi** có native module kiểu NAN/ABI cũ (mục 6.1) | `NODE_MODULE_VERSION mismatch` |
 
 Bổ sung:
 
@@ -127,6 +128,28 @@ Bổ sung:
 - **Preload bắt buộc là CommonJS.** `sandbox: true` không nạp được preload dạng ESM — đây là giới hạn của Electron, không phải tuỳ chọn. Nếu `backend/package.json` khai báo `"type": "module"` (Main viết bằng ESM) thì preload **phải** có đuôi `.cjs`, nếu không Node đọc nhầm định dạng và app không khởi động. Trong `electron.vite.config.js`: `preload.build.lib.formats: ['cjs']` + `rollupOptions.output.entryFileNames: 'preload.cjs'`.
 - Mặc định `electron-vite` xuất ra `out/main/index.js` và `out/preload/index.js`. Muốn phẳng thành `out/main.js` + `out/preload.cjs` như `backend/package.json` khai báo ở khoá `main` thì phải tự đặt `build.outDir: 'out'` và `rollupOptions.output.entryFileNames` cho **cả hai** target — nhớ để `emptyOutDir: true` ở `main` và `false` ở `preload`, vì hai lần build ghi vào cùng thư mục.
 - Dữ liệu **luôn** ghi vào `app.getPath('userData')`, không bao giờ ghi cạnh file `.exe`.
+
+### 6.1. Native module có phải build lại theo ABI của Electron không?
+
+Câu trả lời phụ thuộc **cách gói phát hành binary**, không phải vào việc nó có phải native hay không.
+Kiểm tra bằng một lệnh, đừng đoán:
+
+```bash
+ls backend/node_modules/<tên-gói>/prebuilds
+```
+
+| Thấy gì | Loại | Phải làm gì |
+|---|---|---|
+| Có `prebuilds/<os>-<arch>.node` | **Node-API (N-API)** — ABI ổn định qua mọi phiên bản Node **và** Electron | **Không** rebuild. Không đặt `postinstall`; đặt `npmRebuild: false` trong `electron-builder.yml`. Vẫn **cần** `asarUnpack: "**/*.node"` |
+| Không có `prebuilds/`, chỉ có `binding.gyp` và `build/Release/*.node` | NAN hoặc N-API tự build — binary gắn chặt với `NODE_MODULE_VERSION` | Cần `postinstall: electron-builder install-app-deps`, kèm **Python 3** và **VS Build Tools** trên mọi máy dev |
+
+`better-sqlite3` **từ v12** thuộc nhóm thứ nhất: gói npm đã kèm sẵn `prebuilds/win32-x64.node`
+và các nền tảng khác.
+
+> **Cạm bẫy**: `electron-builder install-app-deps` **không** nhận biết Node-API. Nó thấy
+> `binding.gyp` là gọi `node-gyp rebuild`, rồi fail với *Could not find any Python installation*
+> trên máy không có toolchain C++ — **dù module chạy hoàn hảo mà không cần build gì cả**.
+> Đặt `postinstall` trong trường hợp này chỉ làm `npm install` thoát lỗi vô cớ.
 
 ---
 
@@ -167,9 +190,9 @@ Sau khi bật CSP production, mở DevTools của **bản đóng gói** ít nh�
 
 | Triệu chứng | Nguyên nhân | Khắc phục |
 |---|---|---|
-| `gyp ERR!` hoặc `MSBuild.exe failed` khi `npm install` | Thiếu Visual Studio Build Tools (Desktop development with C++) và Python 3 | Cài cả hai, chạy lại `npm install` |
+| `gyp ERR!` hoặc `MSBuild.exe failed` khi `npm install` | Thiếu Visual Studio Build Tools (Desktop development with C++) và Python 3 | **Kiểm tra mục 6.1 trước**: nếu gói có `prebuilds/` thì không cần build gì cả, bỏ `postinstall` đi. Chỉ khi thật sự là NAN mới cài toolchain |
 | `Error: Electron uninstall` khi chạy dev | `npm install` đã bỏ qua postinstall của gói `electron`, binary chưa được tải về (kiểm tra: `backend/node_modules/electron/dist/` không tồn tại) | `node node_modules/electron/install.js` trong `backend/` |
-| `NODE_MODULE_VERSION mismatch` | Native module build theo ABI của Node, không phải của Electron | `npm run postinstall` ở `backend/` (`electron-builder install-app-deps`) |
+| `NODE_MODULE_VERSION mismatch` | Native module build theo ABI của Node, không phải của Electron | Chỉ xảy ra với module NAN (mục 6.1): chạy `npx electron-builder install-app-deps` ở `backend/`. Module Node-API không bao giờ gặp lỗi này |
 
 ---
 

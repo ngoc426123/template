@@ -129,7 +129,7 @@ SQLite **không** hỗ trợ đổi kiểu cột hay xoá ràng buộc. Trườn
 | 4 | Phân loại đúng: native module → `dependencies`; JS thuần → `devDependencies` (bundler nhét vào output) |
 | 5 | Kiểm tra gói có script `postinstall` không |
 | 6 | Cài, commit `package-lock.json` |
-| 7 | Nếu là native module → chạy `electron-builder install-app-deps`, rồi **build thử bản đóng gói** |
+| 7 | Nếu là native module → xác định loại theo [project-structure.md §6.1](../01-architecture/project-structure.md): có `prebuilds/` thì không cần làm gì, không có thì chạy `electron-builder install-app-deps`. Cả hai trường hợp đều phải **build thử bản đóng gói** |
 | 8 | Ghi vào `project/decisions.md` §3 |
 
 ---

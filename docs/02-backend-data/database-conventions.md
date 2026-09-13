@@ -64,6 +64,41 @@ SQLite chỉ có 5 kiểu lưu trữ. Quy ước ánh xạ:
 
 > **Lưu ý cho bảng ở mục 3**: cột `due_at` trong bản phác thảo domain mẫu phải được đổi thành `due_date` khi chốt domain thật, trừ khi nghiệp vụ thực sự cần độ chính xác tới giờ.
 
+### 1.2c. Cột chữ tiếng Việt: sắp xếp và tìm kiếm phải đi qua cột phụ bỏ dấu
+
+Đây là nguồn lỗi thứ hai hay gặp sau chuyện múi giờ, và nó **không báo lỗi** — chỉ lặng lẽ cho ra thứ tự sai.
+
+SQLite chỉ có ba collation dựng sẵn: `BINARY`, `NOCASE`, `RTRIM`. Cả ba so theo **byte UTF-8**:
+
+```
+ORDER BY given_name  ->  Bé, Cường, Ánh, Đức      SAI
+                         ^^            ^^^^
+         byte đầu của 'B' là 0x42, của 'Á' là 0xC3 — nên 'B' đứng trước 'Á'
+
+thứ tự đúng          ->  Ánh, Bé, Cường, Đức
+```
+
+`NOCASE` cũng không cứu được: nó chỉ hạ chữ thường cho A–Z, không đụng tới chữ có dấu — nên `'Ánh'` và `'ánh'` vẫn là hai giá trị khác nhau khi so sánh. SQLite **không** kèm ICU; muốn có collation tiếng Việt thật phải biên dịch thêm extension, việc này không làm được với bản prebuild của `better-sqlite3`.
+
+**Luật bắt buộc:**
+
+1. Mọi cột chữ **cần sắp xếp hoặc tìm kiếm** phải có một cột phụ đã bỏ dấu, hậu tố `_ascii`:
+
+   | Cột gốc      | Cột phụ            | Dùng để                            |
+   | ------------ | ------------------ | ---------------------------------- |
+   | `full_name`  | `full_name_ascii`  | Tìm kiếm không dấu bằng `LIKE`     |
+   | `given_name` | `given_name_ascii` | `ORDER BY` theo bảng chữ cái       |
+
+2. Cột phụ do **Service sinh lại từ cột gốc mỗi lần ghi**: NFC → bỏ dấu → lowercase. Renderer **không bao giờ** gửi cột này lên ([data-services.md §3.3](./data-services.md)).
+3. `đ` và `Đ` **không** phân rã được bằng NFD — phải thay tay, nếu không "Đức" ra `"uc"`.
+4. Từ khoá tìm kiếm phải đi qua **đúng hàm bỏ dấu đó** trước khi so. Quên bước này thì không bao giờ khớp, mà cũng không có lỗi nào để lần ra.
+5. Cột phụ cần index riêng, và whitelist `sortBy` phải trỏ vào **cột phụ**, không trỏ vào cột gốc ([coding-standards-backend.md §3.1](../04-guidelines/coding-standards-backend.md)).
+6. Cột gốc `NULL` thì cột phụ cũng `NULL`, không phải chuỗi rỗng — theo đúng luật "chuỗi rỗng → `null`".
+
+> **Quyết định lúc thiết kế bảng, đừng để phát hiện sau.** Thêm cột phụ vào một bảng đã phát hành nghĩa là viết migration `ALTER TABLE` **kèm backfill toàn bộ dữ liệu cũ** — trong khi lúc đầu nó chỉ là một dòng trong `CREATE TABLE`.
+
+> Luật này viết cho tiếng Việt vì template đặt chuỗi hiển thị bằng tiếng Việt, nhưng áp được cho mọi ngôn ngữ có dấu.
+
 ### 1.3. Vì sao dùng UUID thay vì số tự tăng?
 
 1. **Xuất / nhập / gộp dữ liệu** giữa hai máy hoặc hai file backup không bị đụng ID.

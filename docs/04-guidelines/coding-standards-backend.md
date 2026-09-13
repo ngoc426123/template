@@ -98,6 +98,11 @@ ALLOWED_SORT_DIRECTIONS = ['ASC', 'DESC']
 
 Giá trị ngoài whitelist → dùng mặc định, **không** ném lỗi ra người dùng.
 
+> **Cột chữ tiếng Việt**: whitelist phải trỏ vào cột phụ đã bỏ dấu (`<cột>_ascii`),
+> không trỏ vào cột gốc. Collation của SQLite so theo byte UTF-8 nên `ORDER BY` trên cột
+> có dấu xếp "Bé" **trước** "Ánh" — sai mà không báo lỗi. Xem
+> [database-conventions.md §1.2c](../02-backend-data/database-conventions.md).
+
 ### 3.2. Không "làm sạch" dữ liệu người dùng
 
 Không loại bỏ dấu nháy, không escape thủ công trước khi lưu. Đó là cách sai, làm hỏng tên `O'Brien`. Tham số hoá đã xử lý xong — dữ liệu phải lưu **nguyên vẹn**.

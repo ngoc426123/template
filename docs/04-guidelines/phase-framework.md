@@ -127,7 +127,7 @@ Luật chỉ nằm trong docs sẽ bị vi phạm im lặng. Luật nằm trong 
 
 | # | Công việc |
 |---|---|
-| 2.1 | Cài `better-sqlite3` vào **`dependencies` của `backend/`**; thêm `electron-builder install-app-deps` vào script `postinstall` |
+| 2.1 | Cài `better-sqlite3` vào **`dependencies` của `backend/`**, ghim chính xác phiên bản. Đối chiếu [project-structure.md §6.1](../01-architecture/project-structure.md) xem có phải rebuild theo ABI Electron không — nếu gói có `prebuilds/` thì **không** đặt `postinstall`, mà đặt `npmRebuild: false` |
 | 2.1b | **Build thử một bản đóng gói ngay** và cài lên máy sạch — xem [project-structure.md §10](../01-architecture/project-structure.md). Lúc này app còn đơn giản, lỗi native module dễ khoanh vùng |
 | 2.2 | Viết `db/connection.js`: singleton, đầy đủ pragma ở mục 4 của [storage-strategy.md](../02-backend-data/storage-strategy.md) |
 | 2.3 | Viết `db/migrator.js`: đọc `user_version`, chạy migration trong transaction, backup trước khi chạy |

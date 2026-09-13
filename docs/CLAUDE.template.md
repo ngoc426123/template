@@ -145,9 +145,10 @@ Mã lỗi (ở `shared/errors.js`): `VALIDATION_ERROR` `NOT_FOUND` `CONFLICT` `F
 | `backend/electron-builder.yml` | `files` | `out/**`, `renderer/**`, `package.json` |
 | | `asarUnpack` | `"**/*.node"` |
 | | `directories.output` | `release` |
+| | `npmRebuild` | `false` khi mọi native module là Node-API — mặc định của template. Thêm module kiểu NAN thì đối chiếu `project-structure.md` §6.1 |
 | `backend/package.json` | `dependencies` | **chỉ** native module + runtime thật: `better-sqlite3`, `electron-updater` |
 | | `devDependencies` | `electron`, `electron-builder`, `electron-vite`, `zod` |
-| | `postinstall` | `electron-builder install-app-deps` |
+| | `postinstall` | **không đặt** — `better-sqlite3` v12+ là Node-API, không cần rebuild (`project-structure.md` §6.1) |
 | SQLite pragma | | `journal_mode=WAL`, `foreign_keys=ON`, `synchronous=NORMAL`, `busy_timeout=5000`, `temp_store=MEMORY` |
 
 Ghim **chính xác** phiên bản `electron` và `better-sqlite3` (không `^`, không `~`).

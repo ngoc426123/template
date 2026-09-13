@@ -19,7 +19,7 @@ Ba yêu cầu quyết định lựa chọn này — cả ba đều **không th�
 | Tìm kiếm toàn văn | Thủ công | Thủ công | **FTS5** |
 | Cần biên dịch native | Không | Không | **Có** |
 
-Chi phí duy nhất phải trả là bước `electron-builder install-app-deps` khi cài đặt và khi nâng Electron — cấu hình một lần trong `postinstall`. Đổi lại có transaction, index, ràng buộc toàn vẹn và tìm kiếm toàn văn ngay từ ngày đầu.
+Chi phí "cần biên dịch native" ở bảng trên **không còn đúng từ `better-sqlite3` v12**: gói npm kèm sẵn prebuild **Node-API**, nạp thẳng dưới Electron mà không cần build lại theo ABI ([project-structure.md §6.1](../01-architecture/project-structure.md)). Đổi lại có transaction, index, ràng buộc toàn vẹn và tìm kiếm toàn văn ngay từ ngày đầu, không cần toolchain C++ trên máy dev.
 
 > `node-sqlite3` (API bất đồng bộ) bị loại vì chậm hơn và rườm rà hơn, trong khi tính bất đồng bộ không mang lại lợi ích — truy vấn cục bộ tính bằng mili-giây và chạy ở Main Process, không chặn UI.
 

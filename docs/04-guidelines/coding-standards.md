@@ -83,7 +83,7 @@ Có native module nên **lệch phiên bản là gãy build**, không phải kh�
 1. Đổi số phiên bản trong backend/package.json
 2. Xoá backend/node_modules
 3. npm install
-4. npx electron-builder install-app-deps     <- biên dịch lại native module
+4. npx electron-builder install-app-deps     <- CHỈ với native module NAN (project-structure.md 6.1)
 5. Chạy dev, kiểm tra mở DB thành công
 6. BUILD BẢN ĐÓNG GÓI và test trên máy sạch  <- KHÔNG được bỏ
 ```
