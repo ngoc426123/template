@@ -196,7 +196,9 @@ Chi tiết: `docs/00-meta/agent-rules.md`. Rút gọn:
 
 **Phạm vi**: một nhiệm vụ một mục đích · không refactor ngoài phạm vi · không tạo file ngoài kế hoạch · tái sử dụng trước khi tạo mới.
 
-**"Xong" nghĩa là**: code đã chạy · lint + format sạch · test liên quan pass · đã đối chiếu checklist PR · nếu chạm `shared/` thì đã sửa cả hai bên · **docs đã cập nhật trong cùng lần thay đổi**.
+**"Xong" nghĩa là**: code đã chạy · lint + format sạch · test liên quan pass · đã đối chiếu checklist PR · nếu chạm `shared/` thì đã sửa cả hai bên · **docs đã cập nhật trong cùng lần thay đổi** · **đã chạy bước tự rà soát bên dưới**.
+
+**Tự rà soát trước khi báo "xong"** (`agent-rules.md` §4.1) — áp cho mỗi tính năng và mỗi phase: đi thêm một lượt riêng bằng con mắt đi tìm lỗi · đối chiếu **từng mục** của kế hoạch với code thật · đọc lại **toàn văn** file vừa đụng · mỗi mục Definition of Done chỉ tick khi có lệnh đã chạy kèm output, trên **chính đường đi của app** — **suy luận không phải bằng chứng**, không kiểm chứng được thì để trống kèm lý do · báo cáo phải có mục **"Đã rà soát — phát hiện gì"**. Người dùng **không phải** nhắc.
 
 **Báo cáo trung thực**: làm được bao nhiêu báo bấy nhiêu · test fail thì nói fail kèm output · chưa chạy thì nói chưa chạy · liệt kê những gì đã tự quyết ngoài docs · **không bịa** phiên bản thư viện, tên API, hay kết quả lệnh.
 

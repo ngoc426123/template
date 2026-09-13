@@ -13,6 +13,30 @@
 
 ---
 
+## 1.4.0
+
+Một mục Definition of Done của Phase 1 được tick bằng **suy luận** thay vì bằng chạy thử, và
+lọt qua vòng báo cáo: lỗi ném ra từ `app.whenReady().then(...)` chỉ thành
+`UnhandledPromiseRejectionWarning`, app sống tiếp mà **không có cửa sổ nào** — đúng triệu chứng
+mà mục DoD đó sinh ra để chặn. Người dùng phải nhắc "rà soát lại" mới tìm ra.
+
+Nguyên nhân không nằm ở việc thiếu luật — mục 4 ("Định nghĩa XONG") đã có sẵn. Nó nằm ở chỗ
+checklist được tick **trong lúc viết**, bởi chính người đang tin là mình vừa làm đúng, và không
+có luật nào đòi **bằng chứng**.
+
+- `00-meta/agent-rules.md` §4.1 (mới): **bước tự rà soát bắt buộc** trước khi báo xong một tính
+  năng hoặc một phase — một lượt đi riêng, đối chiếu từng mục kế hoạch với code thật, đọc lại
+  toàn văn file vừa đụng, ba câu tự vấn, và báo cáo phải có mục "Đã rà soát — phát hiện gì"
+- `00-meta/agent-rules.md` §4.1: định nghĩa **"bằng chứng"** kèm bảng đối chiếu — tick DoD phải
+  có lệnh đã chạy kèm output, chạy trên **chính đường đi của ứng dụng**. Kiểm chứng một cơ chế
+  bằng đoạn code rời **không tính**, vì bug thường nằm ở cách app gọi cơ chế đó
+- `00-meta/agent-rules.md` §9: thêm mục cấm số 10 — báo "xong" khi chưa rà soát
+- `CLAUDE.template.md`: thêm dòng rút gọn vào "Quy tắc làm việc", nối vào định nghĩa "Xong"
+
+Dự án cũ nên áp dụng: chép §4.1 và dòng rút gọn trong `CLAUDE.md`. Không đụng tới code.
+
+---
+
 ## 1.3.0
 
 Bảy cạm bẫy phát hiện khi chạy Phase 0 thật lần đầu. Bốn trong số đó gây lỗi **im lặng** —

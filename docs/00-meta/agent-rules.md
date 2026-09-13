@@ -76,6 +76,33 @@ Một nhiệm vụ chỉ được báo là xong khi **tất cả** các mục sa
 
 > **Không báo "xong" khi mới viết xong code mà chưa chạy.** Nếu không chạy được vì lý do môi trường, phải nói rõ là chưa kiểm chứng.
 
+### 4.1. Bước tự rà soát — bắt buộc, trước khi báo "xong"
+
+Viết xong code chưa phải là xong. Trước khi báo xong **một tính năng** hoặc **một phase**, phải đi thêm **một lượt riêng**, bằng con mắt người đi tìm lỗi chứ không phải con mắt người vừa viết ra nó.
+
+Tick checklist ở mục 4 ngay trong lúc viết là không đủ: nó được tick bởi chính người đang tin rằng mình vừa làm đúng.
+
+| # | Việc | Chặn kiểu lọt nào |
+|---|---|---|
+| 1 | Mở lại kế hoạch (`plan/phase-N-*.md`, hoặc công thức tương ứng ở [recipes.md](../04-guidelines/recipes.md)) và đối chiếu **từng mục** với code thật | Tin vào trí nhớ về việc mình vừa làm, bỏ sót mục nhỏ |
+| 2 | Đọc lại **toàn văn** mọi file vừa tạo hoặc sửa, một lượt liền mạch — kể cả file tưởng là đã chắc | Lỗi nằm đúng ở chỗ không ai đọc lại |
+| 3 | Mỗi mục Definition of Done chỉ được tick khi có **bằng chứng**: lệnh đã chạy kèm output thật, chạy trên **chính đường đi của ứng dụng** | Tick bằng suy luận |
+| 4 | Tự trả lời ba câu: *điều gì mình đã kết luận mà chưa chạy thử?* · *luật nào trong `docs/` chạm tới vùng vừa sửa mà mình chưa đọc lại?* · *việc nào thuộc phase này mà mình đang tưởng là của phase sau?* | Nhầm phạm vi phase, quên luật template |
+| 5 | Báo cáo có mục **"Đã rà soát — phát hiện gì"**. Không phát hiện gì thì ghi rõ đã đối chiếu những gì và không thấy vấn đề. Có phát hiện thì sửa, rồi **kiểm chứng lại từ đầu** | Không rà mà vẫn báo xong |
+
+**"Bằng chứng" nghĩa là gì** — đây là chỗ dễ tự lừa mình nhất:
+
+| Không phải bằng chứng | Là bằng chứng |
+|---|---|
+| "Thư viện X hành xử thế này, nên chỗ này chắc đúng" | Chạy đúng đoạn code đó của app và dán output |
+| "Hàm này giống hàm kia đã chạy được" | Gọi chính hàm này và xem kết quả |
+| "Lệnh đó chắc chắn sẽ pass" | Chạy lệnh, đọc exit code |
+| Kiểm chứng một cơ chế bằng đoạn code rời tự viết ra | Kiểm chứng trên đường đi thật của ứng dụng — vì bug thường nằm ở **cách app gọi** cơ chế đó, không nằm trong cơ chế |
+
+> Không kiểm chứng được vì lý do môi trường → **để trống kèm lý do**, không tick. Mục để trống kèm lý do là báo cáo trung thực; mục tick bằng suy luận là báo cáo sai.
+
+Người dùng **không phải** nhắc bước này.
+
 ---
 
 ## 5. Trung thực khi báo cáo
@@ -157,6 +184,8 @@ Docs phải được cập nhật **trong cùng lần thay đổi**, không đ�
 7. Bỏ qua một luật trong docs mà không nêu ra
 8. Bịa phiên bản thư viện, tên API, hoặc kết quả lệnh
 9. Tự chốt một "Quyết định còn bỏ ngỏ" trong CLAUDE.md
+10. Báo "xong" một tính năng hoặc một phase khi chưa chạy bước tự rà soát ở
+    mục 4.1 — và khi rà soát rồi thì báo cáo phải nói rõ đã rà những gì
 ```
 
 ---

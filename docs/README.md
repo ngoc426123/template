@@ -46,7 +46,7 @@ Sinh nó từ [`CLAUDE.template.md`](./CLAUDE.template.md).
 
 | File | Nội dung |
 |---|---|
-| [agent-rules.md](./00-meta/agent-rules.md) | **Quy tắc làm việc cho AI agent.** Khi nào phải hỏi, phạm vi một lần thay đổi, định nghĩa "xong", báo cáo trung thực, xử lý khi docs mâu thuẫn thực tế, chống trôi dạt qua nhiều phiên |
+| [agent-rules.md](./00-meta/agent-rules.md) | **Quy tắc làm việc cho AI agent.** Khi nào phải hỏi, phạm vi một lần thay đổi, định nghĩa "xong" và **bước tự rà soát bắt buộc**, báo cáo trung thực, xử lý khi docs mâu thuẫn thực tế, chống trôi dạt qua nhiều phiên |
 | [naming-conventions.md](./00-meta/naming-conventions.md) | Quy ước ngôn ngữ (định danh EN ↔ hiển thị VN), thuật ngữ kỹ thuật thống nhất, cách viết chuỗi tiếng Việt trên UI, danh sách viết tắt được phép |
 | [decisions-baseline.md](./00-meta/decisions-baseline.md) | **18 quyết định nền** của template kèm lý do và mức khó đảo ngược; **5 câu hỏi** mỗi dự án phải trả lời |
 
